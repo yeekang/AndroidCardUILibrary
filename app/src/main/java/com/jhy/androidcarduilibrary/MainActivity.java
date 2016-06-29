@@ -16,8 +16,6 @@ public class MainActivity extends AppCompatActivity {
         FlowManager.init(new FlowConfig.Builder(this).openDatabasesOnInit(true).build());
         FlowManager.getDatabase(CardDB.class).getWritableDatabase();
 
-        System.out.println("on create");
-
         new Connection().getJSON(this);
     }
 }

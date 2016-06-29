@@ -23,8 +23,6 @@ public class Connection {
 
     public void getJSON(final Context context) {
 
-        System.out.println("connection start");
-
         StringRequest sr = new StringRequest(JSON_URL,
                 new Response.Listener<String>() {
                     @Override
