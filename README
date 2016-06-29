@@ -1,0 +1,10 @@
+this project consist of 2 part: RecyclerView part & DataAccess part
+
+to view RecyclerView part, change line 14 in AndroidManifest.xml to <activity android:name=".RecyclerViewActivity">,
+and edit configuration, click on the app button with android icon, beside 'run' button,
+in General tab > Launch Options > change Launch to Specified Activity and select RecyclerViewActivity
+in the Activity. Press OK and run.
+
+to view DataAccess part, revert above step back to it original, <activity android:name=".MainActivity"> in
+AndroidManifest.xml, Launch Options > Default.
+Data that retrieve from URL does not display in UI, but can be see in logcat using System.out.print()
