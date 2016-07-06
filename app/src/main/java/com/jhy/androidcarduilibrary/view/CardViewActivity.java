@@ -1,4 +1,4 @@
-package com.jhy.androidcarduilibrary;
+package com.jhy.androidcarduilibrary.view;
 
 /**
  * Created by jhyha on 30-Jun-16.
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.jhy.androidcarduilibrary.R;
 
 public class CardViewActivity extends AppCompatActivity {
 

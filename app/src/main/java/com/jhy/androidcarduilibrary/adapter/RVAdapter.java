@@ -1,4 +1,4 @@
-package com.jhy.androidcarduilibrary;
+package com.jhy.androidcarduilibrary.adapter;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.jhy.androidcarduilibrary.Idol;
+import com.jhy.androidcarduilibrary.R;
 
 import java.util.List;
 
@@ -44,13 +47,36 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.IdolViewHolder> {
 
 
     @Override
-    public IdolViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public IdolViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        View view = null;
+        switch (viewType) {
+            case 0:
+                view = ...;
+                break;
+            case 1:
+                view = ..;
+                break;
+        }
+
+        if (view != null)
+            reutrn new IdolViewHolder(view);
+
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item, viewGroup, false);
         return new IdolViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(IdolViewHolder idolViewHolder, int i) {
+    public void onBindViewHolder(IdolViewHolder idolViewHolder, int position) {
+        switch ( getItemViewType(position) ) {
+            case 0:
+                break;
+
+            case 1:
+
+                break;
+        }
+
+
         idolViewHolder.idolName.setText(Idols.get(i).name);
         idolViewHolder.idolAge.setText(Idols.get(i).age);
         idolViewHolder.idolPhoto.setImageResource(Idols.get(i).photoId);
@@ -59,5 +85,13 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.IdolViewHolder> {
     @Override
     public int getItemCount() {
         return Idols.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (Idols.get(position).type == "TYPE_1")
+            return 0;
+        else if (Idols.get(position).type == "TYPE_2")
+            return 1;
     }
 }
