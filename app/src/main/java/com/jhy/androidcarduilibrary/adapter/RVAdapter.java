@@ -1,6 +1,7 @@
 package com.jhy.androidcarduilibrary.adapter;
 
 import android.annotation.SuppressLint;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,13 +11,14 @@ import android.widget.TextView;
 import com.jhy.androidcarduilibrary.Bulletin;
 import com.jhy.androidcarduilibrary.Opportunitymap;
 import com.jhy.androidcarduilibrary.R;
+import com.jhy.androidcarduilibrary.database.model.Item;
 
 
 import java.util.List;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
-    private List<Object> items;
+    private static List<Object> items;
 
     private final int BULLETIN = 0, OPPORTUNITYMAP = 1;
 
@@ -24,9 +26,29 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         this.items = items;
     }
 
+    public void onItemRemove(final ViewHolder viewHolder, final RecyclerView rv) {
+        int adapterPosition = viewHolder.getAdapterPosition();
+        final Item mItem = (Item) items.get(adapterPosition);
+        Snackbar snackbar = Snackbar
+                .make(rv, "Archieved", Snackbar.LENGTH_LONG)
+                .setAction("UNDO", new View.OnClickListener(){
+            @Override
+                public void onClick(View view){
+                int mAdapterPosition =viewHolder.getAdapterPosition();
+                items.add(mAdapterPosition,mItem);
+                notifyItemInserted(mAdapterPosition);
+                rv.scrollToPosition(mAdapterPosition);
+            }
+        });
+        snackbar.show();
+        items.remove(adapterPosition);
+        notifyItemRemoved(adapterPosition);
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public ViewHolder(View itemView) {
+
             super(itemView);
         }
     }
@@ -50,42 +72,29 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
             return label1;
         }
 
-
         public TextView getLabel2() {
             return label2;
         }
-
-
 
         public TextView getLabel3() {
             return label3;
         }
 
-
-
         public TextView getLabel4() {
             return label4;
         }
-
-
 
         public TextView getLabel5() {
             return label5;
         }
 
-
-
         public TextView getLabel6() {
             return label6;
         }
 
-
-
         public TextView getLabel7() {
             return label7;
         }
-
-
     }
 
     public class ViewHolder2 extends RVAdapter.ViewHolder {
@@ -105,25 +114,17 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
             return label1;
         }
 
-
-
         public TextView getLabel2() {
             return label2;
         }
-
-
 
         public TextView getLabel3() {
             return label3;
         }
 
-
-
         public TextView getLabel4() {
             return label4;
         }
-
-
     }
     @Override
     public int getItemCount() {
