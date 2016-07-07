@@ -1,63 +1,48 @@
 package com.jhy.androidcarduilibrary.view;
 
-/**
- * Created by jhyha on 30-Jun-16.
- */
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-<<<<<<< HEAD:app/src/main/java/com/jhy/androidcarduilibrary/view/RecyclerViewActivity.java
-import com.jhy.androidcarduilibrary.R;
-import com.jhy.androidcarduilibrary.adapter.RVAdapter;
-=======
 
 
-import com.jhy.androidcarduilibrary.Idol;
+import com.jhy.androidcarduilibrary.Bulletin;
+import com.jhy.androidcarduilibrary.Opportunitymap;
 import com.jhy.androidcarduilibrary.R;
 import com.jhy.androidcarduilibrary.adapter.RVAdapter;
 
->>>>>>> da50a8dfe2133bc3619b07caaaff3098e56596c7:app/src/main/java/com/jhy/androidcarduilibrary/view/RecyclerViewActivity.java
 import java.util.ArrayList;
-import java.util.List;
 
 public class RecyclerViewActivity extends AppCompatActivity {
 
-    private List<Idol> Idols;
-    private RecyclerView rv;
-
+    RecyclerView rv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.recycler_view);
 
-        rv=(RecyclerView)findViewById(R.id.rv);
+        rv = (RecyclerView) findViewById(R.id.rv);
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
         rv.setLayoutManager(llm);
         rv.setHasFixedSize(true);
 
-        initializeData();
         initializeAdapter();
     }
 
-    private void initializeData(){
-        Idols = new ArrayList<>();
-        Idols.add(new Idol("Alaina", "23 years old", R.mipmap.p1));
-        Idols.add(new Idol("AngelaBaby", "25 years old", R.mipmap.p2));
-        Idols.add(new Idol("Alexandra", "27 years old", R.mipmap.p3));
-        Idols.add(new Idol("Ann Marie", "24 years old", R.mipmap.p4));
-        Idols.add(new Idol("Christina", "22 years old", R.mipmap.p5));
-        Idols.add(new Idol("Diana", "23 years old", R.mipmap.p6));
-        Idols.add(new Idol("Gina", "25 years old", R.mipmap.p7));
-        Idols.add(new Idol("Joanne", "26 years old", R.mipmap.p8));
-        Idols.add(new Idol("Julia", "28 years old", R.mipmap.p9));
-        Idols.add(new Idol("Karen", "21 years old", R.mipmap.p10));
+    private ArrayList<Object> getSampleArrayList() {
+        ArrayList<Object> items = new ArrayList<>();
+        items.add(new Bulletin("Quick Bites - Malaysia Airports Holdings", "2016-06-13T00:17:00", "May’s Passenger Traffic Snapshot", "3B10776F-4539-4398-AE78-1E682A121D06", "http://www.kenanga.com.my/general/kenanga-today", "A3B799E3-16F0-4637-BB88-79268D8EA79E", "Y"));
+        items.add(new Opportunitymap("New opportunity map is available!", "", "", 117));
+
+        return items;
     }
 
-    private void initializeAdapter(){
-        RVAdapter adapter = new RVAdapter(Idols);
+    private void initializeAdapter() {
+        // Bind adapter to recycler view object
+        RVAdapter adapter = new RVAdapter(getSampleArrayList());
         rv.setAdapter(adapter);
     }
 }

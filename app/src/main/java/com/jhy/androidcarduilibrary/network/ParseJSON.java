@@ -1,6 +1,7 @@
 package com.jhy.androidcarduilibrary.network;
 
 import com.jhy.androidcarduilibrary.database.model.Card;
+import com.jhy.androidcarduilibrary.database.model.Item;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,8 +26,24 @@ public class ParseJSON {
                 Card card = new Card();
                 card.setType(jo.getString("tp"));
                 card.setSubtype(jo.getString("subtp"));
-                card.setItm(jo.getString("itm"));
                 card.save();
+
+                JSONArray cardItem = jo.getJSONArray("itm");
+
+                for(int j =0; j < cardItem.length(); j++) {
+                    JSONObject itm = cardItem.getJSONObject(i);
+
+                    Item item = new Item();
+                    item.setCdid(itm.getString("cdid"));
+                    item.setImgid(itm.getString("imgid"));
+                    item.setBd(itm.getString("bd"));
+                    item.setRmb(itm.getString("rmb"));
+                    item.setCrts(itm.getString("crts"));
+                    item.setRdts(itm.getString("rdts"));
+                    item.associateCard(card);
+                    item.save();
+                }
+
 
 
             }
