@@ -1,4 +1,6 @@
-package com.jhy.androidcarduilibrary;
+package com.jhy.androidcarduilibrary.network;
+
+import com.jhy.androidcarduilibrary.database.model.Card;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +27,8 @@ public class ParseJSON {
                 card.setSubtype(jo.getString("subtp"));
                 card.setItm(jo.getString("itm"));
                 card.save();
+
+
             }
         } catch (JSONException e) {
             e.printStackTrace();

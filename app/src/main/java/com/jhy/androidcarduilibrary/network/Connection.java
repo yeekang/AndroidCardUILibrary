@@ -1,7 +1,6 @@
-package com.jhy.androidcarduilibrary;
+package com.jhy.androidcarduilibrary.network;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;

@@ -1,4 +1,4 @@
-package com.jhy.androidcarduilibrary;
+package com.jhy.androidcarduilibrary.database;
 
 import com.raizlabs.android.dbflow.annotation.Database;
 

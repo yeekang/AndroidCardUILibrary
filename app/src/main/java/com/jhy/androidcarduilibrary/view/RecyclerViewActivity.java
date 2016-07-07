@@ -1,4 +1,4 @@
-package com.jhy.androidcarduilibrary;
+package com.jhy.androidcarduilibrary.view;
 
 /**
  * Created by jhyha on 30-Jun-16.
@@ -7,8 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
-
+import com.jhy.androidcarduilibrary.R;
+import com.jhy.androidcarduilibrary.adapter.RVAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
