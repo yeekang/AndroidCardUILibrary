@@ -55,6 +55,7 @@ public class ParseJSON {
             System.out.println(e.getMessage());
         }
 
+        /*
         List<Card> cards = SQLite.select().from(Card.class).queryList();
         String s = "";
         for (Card c : cards) {
@@ -71,6 +72,6 @@ public class ParseJSON {
             }
         }
 
-        System.out.println(s);
+        System.out.println(s);*/
     }
 }
