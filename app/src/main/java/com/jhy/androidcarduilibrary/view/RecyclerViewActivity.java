@@ -11,6 +11,10 @@ import com.jhy.androidcarduilibrary.Bulletin;
 import com.jhy.androidcarduilibrary.Opportunitymap;
 import com.jhy.androidcarduilibrary.R;
 import com.jhy.androidcarduilibrary.adapter.RVAdapter;
+import com.jhy.androidcarduilibrary.database.CardDB;
+import com.jhy.androidcarduilibrary.network.Connection;
+import com.raizlabs.android.dbflow.config.FlowConfig;
+import com.raizlabs.android.dbflow.config.FlowManager;
 
 import java.util.ArrayList;
 
@@ -20,6 +24,10 @@ public class RecyclerViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        FlowManager.init(new FlowConfig.Builder(this).openDatabasesOnInit(true).build());
+        FlowManager.getDatabase(CardDB.class).getWritableDatabase();
+        new Connection().getJSON(this);
 
         setContentView(R.layout.recycler_view);
 

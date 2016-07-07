@@ -1,11 +1,16 @@
 package com.jhy.androidcarduilibrary.network;
 
+import android.widget.TextView;
+
 import com.jhy.androidcarduilibrary.database.model.Card;
 import com.jhy.androidcarduilibrary.database.model.Item;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * Created by jhyha on 29-Jun-16.
@@ -31,7 +36,7 @@ public class ParseJSON {
                 JSONArray cardItem = jo.getJSONArray("itm");
 
                 for(int j =0; j < cardItem.length(); j++) {
-                    JSONObject itm = cardItem.getJSONObject(i);
+                    JSONObject itm = cardItem.getJSONObject(j);
 
                     Item item = new Item();
                     item.setCdid(itm.getString("cdid"));
@@ -44,12 +49,28 @@ public class ParseJSON {
                     item.save();
                 }
 
-
-
             }
         } catch (JSONException e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
         }
+
+        List<Card> cards = SQLite.select().from(Card.class).queryList();
+        String s = "";
+        for (Card c : cards) {
+            s += c.getType() + "  " + c.getSubtype() + "\n";
+            List<Item> items = c.getMyItems();
+            for (Item i : items) {
+                try {
+                    JSONObject bdJSON = new JSONObject(i.getBd());
+                } catch (JSONException e) {
+                    System.out.println(e);
+                }
+                s += "\t" + i.getCdid() + " " + i.getImgid() + " " + i.getBd()
+                        + " " + i.getRmb() + " " + i.getCrts() + " " + i.getRdts() + "\n";
+            }
+        }
+
+        System.out.println(s);
     }
 }
