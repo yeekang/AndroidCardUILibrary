@@ -7,8 +7,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+<<<<<<< HEAD:app/src/main/java/com/jhy/androidcarduilibrary/view/RecyclerViewActivity.java
 import com.jhy.androidcarduilibrary.R;
 import com.jhy.androidcarduilibrary.adapter.RVAdapter;
+=======
+
+
+import com.jhy.androidcarduilibrary.Idol;
+import com.jhy.androidcarduilibrary.R;
+import com.jhy.androidcarduilibrary.adapter.RVAdapter;
+
+>>>>>>> da50a8dfe2133bc3619b07caaaff3098e56596c7:app/src/main/java/com/jhy/androidcarduilibrary/view/RecyclerViewActivity.java
 import java.util.ArrayList;
 import java.util.List;
 

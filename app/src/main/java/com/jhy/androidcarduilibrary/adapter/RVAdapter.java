@@ -8,8 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+<<<<<<< HEAD:app/src/main/java/com/jhy/androidcarduilibrary/adapter/RVAdapter.java
 import com.jhy.androidcarduilibrary.R;
 import com.jhy.androidcarduilibrary.view.Idol;
+=======
+
+import com.jhy.androidcarduilibrary.Idol;
+import com.jhy.androidcarduilibrary.R;
+
+>>>>>>> da50a8dfe2133bc3619b07caaaff3098e56596c7:app/src/main/java/com/jhy/androidcarduilibrary/adapter/RVAdapter.java
 import java.util.List;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.IdolViewHolder> {
@@ -49,15 +56,26 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.IdolViewHolder> {
         View view = null;
         switch (viewType) {
             case 0:
+<<<<<<< HEAD:app/src/main/java/com/jhy/androidcarduilibrary/adapter/RVAdapter.java
 
                 break;
             case 1:
 
+=======
+                view = ...;
+                break;
+            case 1:
+                view = ..;
+>>>>>>> da50a8dfe2133bc3619b07caaaff3098e56596c7:app/src/main/java/com/jhy/androidcarduilibrary/adapter/RVAdapter.java
                 break;
         }
 
         if (view != null)
+<<<<<<< HEAD:app/src/main/java/com/jhy/androidcarduilibrary/adapter/RVAdapter.java
             return new IdolViewHolder(view);
+=======
+            reutrn new IdolViewHolder(view);
+>>>>>>> da50a8dfe2133bc3619b07caaaff3098e56596c7:app/src/main/java/com/jhy/androidcarduilibrary/adapter/RVAdapter.java
 
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item, viewGroup, false);
         return new IdolViewHolder(v);
@@ -75,9 +93,15 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.IdolViewHolder> {
         }
 
 
+<<<<<<< HEAD:app/src/main/java/com/jhy/androidcarduilibrary/adapter/RVAdapter.java
         idolViewHolder.idolName.setText(Idols.get(position).name);
         idolViewHolder.idolAge.setText(Idols.get(position).age);
         idolViewHolder.idolPhoto.setImageResource(Idols.get(position).photoId);
+=======
+        idolViewHolder.idolName.setText(Idols.get(i).name);
+        idolViewHolder.idolAge.setText(Idols.get(i).age);
+        idolViewHolder.idolPhoto.setImageResource(Idols.get(i).photoId);
+>>>>>>> da50a8dfe2133bc3619b07caaaff3098e56596c7:app/src/main/java/com/jhy/androidcarduilibrary/adapter/RVAdapter.java
     }
 
     @Override
@@ -85,12 +109,19 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.IdolViewHolder> {
         return Idols.size();
     }
 
+<<<<<<< HEAD:app/src/main/java/com/jhy/androidcarduilibrary/adapter/RVAdapter.java
     /*
+=======
+>>>>>>> da50a8dfe2133bc3619b07caaaff3098e56596c7:app/src/main/java/com/jhy/androidcarduilibrary/adapter/RVAdapter.java
     @Override
     public int getItemViewType(int position) {
         if (Idols.get(position).type == "TYPE_1")
             return 0;
         else if (Idols.get(position).type == "TYPE_2")
             return 1;
+<<<<<<< HEAD:app/src/main/java/com/jhy/androidcarduilibrary/adapter/RVAdapter.java
     }*/
+=======
+    }
+>>>>>>> da50a8dfe2133bc3619b07caaaff3098e56596c7:app/src/main/java/com/jhy/androidcarduilibrary/adapter/RVAdapter.java
 }
