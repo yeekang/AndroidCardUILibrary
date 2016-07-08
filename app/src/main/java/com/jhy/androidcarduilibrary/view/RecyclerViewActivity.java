@@ -1,11 +1,13 @@
 package com.jhy.androidcarduilibrary.view;
 
 
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.View;
 
 
 import com.jhy.androidcarduilibrary.Bulletin;
@@ -24,6 +26,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
 
     RecyclerView rv;
     RVAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
     private ArrayList<Object> getSampleArrayList() {
         ArrayList<Object> items = new ArrayList<>();
         items.add(new Bulletin("Quick Bites - Malaysia Airports Holdings", "2016-06-13T00:17:00", "May’s Passenger Traffic Snapshot", "3B10776F-4539-4398-AE78-1E682A121D06", "http://www.kenanga.com.my/general/kenanga-today", "A3B799E3-16F0-4637-BB88-79268D8EA79E", "Y"));
+        items.add(new Bulletin("Quick Bites - Malaysia Airports Holdings", "2016-06-13T00:17:00", "May’s Passenger Traffic Snapshot", "3B10776F-4539-4398-AE78-1E682A121D06", "http://www.kenanga.com.my/general/kenanga-today", "A3B799E3-16F0-4637-BB88-79268D8EA79E", "Y"));
         items.add(new Opportunitymap("New opportunity map is available!", "", "", 117));
 
         return items;
@@ -67,9 +71,27 @@ public class RecyclerViewActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                adapter.onItemRemove((RVAdapter.ViewHolder) viewHolder, rv);
+            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
+                int adapterPosition = viewHolder.getAdapterPosition();
+                final Bulletin mItem = (Bulletin) getSampleArrayList().get(adapterPosition);
+                Snackbar snackbar = Snackbar
+                        .make(rv, "Archieved", Snackbar.LENGTH_LONG)
+                        .setAction("UNDO", new View.OnClickListener(){
+                            @Override
+                            public void onClick(View view){
+                                int mAdapterPosition = viewHolder.getAdapterPosition();
+                                getSampleArrayList().add(mAdapterPosition,mItem);
+                                adapter.notifyItemInserted(mAdapterPosition);
+                                rv.scrollToPosition(mAdapterPosition);
+                            }
+                        });
+                snackbar.show();
+                getSampleArrayList().remove(adapterPosition);
+                adapter.notifyItemRemoved(adapterPosition);
             }
         };
+
+        ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        mItemTouchHelper.attachToRecyclerView(rv);
     }
 }

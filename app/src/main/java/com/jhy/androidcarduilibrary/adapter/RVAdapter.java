@@ -1,7 +1,6 @@
 package com.jhy.androidcarduilibrary.adapter;
 
 import android.annotation.SuppressLint;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,25 +23,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
     public RVAdapter( List<Object> items){
         this.items = items;
-    }
-
-    public void onItemRemove(final ViewHolder viewHolder, final RecyclerView rv) {
-        int adapterPosition = viewHolder.getAdapterPosition();
-        final Item mItem = (Item) items.get(adapterPosition);
-        Snackbar snackbar = Snackbar
-                .make(rv, "Archieved", Snackbar.LENGTH_LONG)
-                .setAction("UNDO", new View.OnClickListener(){
-            @Override
-                public void onClick(View view){
-                int mAdapterPosition =viewHolder.getAdapterPosition();
-                items.add(mAdapterPosition,mItem);
-                notifyItemInserted(mAdapterPosition);
-                rv.scrollToPosition(mAdapterPosition);
-            }
-        });
-        snackbar.show();
-        items.remove(adapterPosition);
-        notifyItemRemoved(adapterPosition);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
