@@ -22,7 +22,19 @@ public class Retrieval {
         for (Card c : cards) {
             //s += c.getType() + "  " + c.getSubtype() + "\n";
             List<Item> items = c.getMyItems();
+
+            System.out.println(items.size());
+
             for (Item i : items) {
+
+                //rdts flag -----
+                if(i.getRdts().isEmpty()) {
+
+                } else {
+                    items.remove(i);
+                }
+                //end ------
+
                 try {
                     //parse back body as json
                     JSONObject bdJSON = new JSONObject(i.getBd());
@@ -31,6 +43,8 @@ public class Retrieval {
                 }
                 //s += "\t" + i.getCdid() + " " + i.getImgid() + " " + i.getBd() + " " + i.getRmb() + " " + i.getCrts() + " " + i.getRdts() + "\n";
             }
+
+            System.out.println(items.size());
         }
         //System.out.println(s);
         //--------end--------
