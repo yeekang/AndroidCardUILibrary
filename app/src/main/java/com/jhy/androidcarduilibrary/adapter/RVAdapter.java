@@ -27,25 +27,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         this.items = items;
     }
 
-    public void onItemRemove(final ViewHolder viewHolder, final RecyclerView rv) {
-        int adapterPosition = viewHolder.getAdapterPosition();
-        final Object mItem = items.get(adapterPosition);
-                Snackbar snackbar = Snackbar
-                        .make(rv, "Archieved", Snackbar.LENGTH_LONG)
-                        .setAction("UNDO", new View.OnClickListener(){
-                            @Override
-                            public void onClick(View view){
-                                int mAdapterPosition = viewHolder.getAdapterPosition();
-                                items.add(mAdapterPosition,mItem);
-                                notifyItemInserted(mAdapterPosition);
-                                rv.scrollToPosition(mAdapterPosition);
-                            }
-                        });
-                snackbar.show();
-        items.remove(adapterPosition);
-        notifyItemRemoved(adapterPosition);
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public ViewHolder(View itemView) {
@@ -129,7 +110,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     }
     @Override
     public int getItemCount() {
-        return this.items.size();
+        return items.size();
     }
 
     public int getItemViewType(int position){
@@ -196,6 +177,25 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
             vh2.getLabel3().setText("Url: " + Opportunitymap.url);
             vh2.getLabel4().setText("SeriesCount: " + Opportunitymap.seriesCount);
         }
+    }
 
+    public void onItemRemove(final ViewHolder viewHolder, final RecyclerView rv) {
+        int adapterPosition = viewHolder.getAdapterPosition();
+        final Object mItem = items.get(adapterPosition);
+        Snackbar snackbar = Snackbar
+                .make(rv, "Archieved", Snackbar.LENGTH_LONG)
+                .setAction("UNDO", new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view){
+                        int mAdapterPosition = viewHolder.getAdapterPosition();
+                        items.add(mAdapterPosition,mItem);
+                        notifyItemInserted(mAdapterPosition);
+                        rv.scrollToPosition(mAdapterPosition);
+                    }
+                });
+        snackbar.show();
+        items.remove(adapterPosition);
+        rv.removeViewAt(adapterPosition);
+        this.notifyItemRemoved(adapterPosition);
     }
 }
