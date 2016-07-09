@@ -1,6 +1,7 @@
 package com.jhy.androidcarduilibrary.adapter;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,23 +16,42 @@ import com.jhy.androidcarduilibrary.R;
 import com.jhy.androidcarduilibrary.database.model.Item;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
+public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
     private static List<Object> items;
 
     private final int BULLETIN = 0, OPPORTUNITYMAP = 1;
 
-    public RVAdapter( List<Object> items){
+    public RVAdapter(ArrayList<Object> items) {
         this.items = items;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public ViewHolder(View itemView) {
-
             super(itemView);
+            itemView.setClickable(true);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            switch(getPosition()){
+                case 0:
+                    Log.d("aa","First one tapped!");
+                    break;
+                case 1:
+                    Log.d("aa","Second one tapped!");
+                    break;
+                case 2:
+                    Log.d("aa","Third one tapped!");
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -77,6 +97,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         public TextView getLabel7() {
             return label7;
         }
+
     }
 
     public class ViewHolder2 extends RVAdapter.ViewHolder {
@@ -89,7 +110,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
             label2 = (TextView) v.findViewById(R.id.item9);
             label3 = (TextView) v.findViewById(R.id.item10);
             label4 = (TextView) v.findViewById(R.id.item11);
-
         }
 
         public TextView getLabel1() {
@@ -107,7 +127,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         public TextView getLabel4() {
             return label4;
         }
+
     }
+
     @Override
     public int getItemCount() {
         return items.size();
@@ -123,7 +145,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     }
 
     @Override
-    public RVAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType){
+    public RVAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, final int viewType){
         RVAdapter.ViewHolder viewHolder = null;
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
 
