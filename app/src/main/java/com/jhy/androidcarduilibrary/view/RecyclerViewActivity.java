@@ -34,7 +34,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
 
         FlowManager.init(new FlowConfig.Builder(this).openDatabasesOnInit(true).build());
         FlowManager.getDatabase(CardDB.class).getWritableDatabase();
-        //new Connection().getJSON(this);
+        new Connection().getJSON(this);
         //new Retrieval().getDBCard();
         setContentView(R.layout.recycler_view);
 
