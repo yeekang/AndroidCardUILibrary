@@ -47,14 +47,15 @@ public class RecyclerViewActivity extends AppCompatActivity {
         rv.setHasFixedSize(true);
 
         initializeAdapter();
-        setUpItemTouchHelp();
+        //setUpItemTouchHelp();
     }
 
+    /*
     private ArrayList<Object> getSampleArrayList() {
         ArrayList<Object> items = new ArrayList<>();
-        items.add(new Bulletin("Quick Bites - Malaysia Airports Holdings", "2016-06-13T00:17:00", "May’s Passenger Traffic Snapshot", "3B10776F-4539-4398-AE78-1E682A121D06", "http://www.kenanga.com.my/general/kenanga-today", "A3B799E3-16F0-4637-BB88-79268D8EA79E", "Y"));
-        items.add(new Bulletin("Quick Bites - Malaysia Airports Holdings", "2016-06-13T00:17:00", "May’s Passenger Traffic Snapshot", "3B10776F-4539-4398-AE78-1E682A121D06", "http://www.kenanga.com.my/general/kenanga-today", "A3B799E3-16F0-4637-BB88-79268D8EA79E", "Y"));
-        items.add(new Opportunitymap("New opportunity map is available!", "", "", 117));
+        //items.add(new Bulletin("Quick Bites - Malaysia Airports Holdings", "2016-06-13T00:17:00", "May’s Passenger Traffic Snapshot", "3B10776F-4539-4398-AE78-1E682A121D06", "http://www.kenanga.com.my/general/kenanga-today", "A3B799E3-16F0-4637-BB88-79268D8EA79E", "Y"));
+        //items.add(new Bulletin("Quick Bites - Malaysia Airports Holdings", "2016-06-13T00:17:00", "May’s Passenger Traffic Snapshot", "3B10776F-4539-4398-AE78-1E682A121D06", "http://www.kenanga.com.my/general/kenanga-today", "A3B799E3-16F0-4637-BB88-79268D8EA79E", "Y"));
+        //items.add(new Opportunitymap("New opportunity map is available!", "", "", 117));
 
         List<Card> cards = new Retrieval().getDBCard();
         for (Card c : cards) {
@@ -94,18 +95,19 @@ public class RecyclerViewActivity extends AppCompatActivity {
         //items.add(new Opportunitymap("New opportunity map is available!", "", "", 117));
 
         return items;
-    }
+    }*/
 
     private void initializeAdapter() {
         // Bind adapter to recycler view object
-        RVAdapter adapter = new RVAdapter(getSampleArrayList());
+        RVAdapter adapter = new RVAdapter(new Retrieval().getDBCard());
         rv.setAdapter(adapter);
     }
 
+    /*
     private void setUpItemTouchHelp() {
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
-            RVAdapter adapter = new RVAdapter(getSampleArrayList());
+            RVAdapter adapter = new RVAdapter(new Retrieval().getDBCard());
 
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -120,5 +122,5 @@ public class RecyclerViewActivity extends AppCompatActivity {
 
         ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         mItemTouchHelper.attachToRecyclerView(rv);
-    }
+    }*/
 }

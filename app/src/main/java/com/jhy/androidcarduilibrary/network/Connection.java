@@ -18,11 +18,12 @@ import java.util.Map;
  */
 public class Connection {
 
-    private String JSON_URL = "http://www.jiran.org.my:8082/ACLWS/api/v1/simpleCards";
+    private String SIMPLE_CARD_URL = "http://www.jiran.org.my:8082/ACLWS/api/v1/simpleCards";
+    private String MODERATE_CARD_URL = "http://www.jiran.org.my:8082/ACLWS/api/v1/moderateCards";
 
     public void getJSON(final Context context) {
 
-        StringRequest sr = new StringRequest(JSON_URL,
+        StringRequest sr = new StringRequest(SIMPLE_CARD_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -40,7 +41,7 @@ public class Connection {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<String, String>();
-                        params.put("redirect_uri", "http://www.jiran.org.my:8082/ACLWS/api/v1/simpleCards" );
+                        params.put("redirect_uri", SIMPLE_CARD_URL);
                         return params;
                     }
 

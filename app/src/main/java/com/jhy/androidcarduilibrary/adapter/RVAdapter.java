@@ -13,21 +13,22 @@ import android.widget.TextView;
 import com.jhy.androidcarduilibrary.Bulletin;
 import com.jhy.androidcarduilibrary.Opportunitymap;
 import com.jhy.androidcarduilibrary.R;
+import com.jhy.androidcarduilibrary.database.model.Card;
 import com.jhy.androidcarduilibrary.database.model.Item;
 
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
-    private static List<Object> items;
-
     private final int BULLETIN = 0, OPPORTUNITYMAP = 1;
 
-    public RVAdapter(ArrayList<Object> items) {
-        this.items = items;
-    }
+    private static List<Card> cards;//by jhy
+    public RVAdapter(List<Card> cards) {this.cards = cards;} //by jhy
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -132,14 +133,14 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return cards.size();
     }
 
-    public int getItemViewType(int position){
-        if(items.get(position) instanceof Bulletin){
-            return BULLETIN;
-        }else if(items.get(position) instanceof Opportunitymap){
-            return OPPORTUNITYMAP;
+    public int getItemViewType(int position) {  //by jhy
+        if(cards.get(position).getType().equals("BULLETIN")) {
+            return 0;
+        } else if(cards.get(position).getType().equals("OPPORTUNITYMAP")) {
+            return 1;
         }
         return -1;
     }
@@ -178,29 +179,46 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
     @SuppressLint("SetTextI18n")
     private void configureViewHolder1(ViewHolder1 vh1, int position) {
-        Bulletin bulletin = (Bulletin) items.get(position);
-        if (bulletin != null) {
-            vh1.getLabel1().setText("Title: " + bulletin.title);
-            vh1.getLabel2().setText("PublishTS: " + bulletin.publishTS);
-            vh1.getLabel3().setText("Snippet: " + bulletin.snippet);
-            vh1.getLabel4().setText("NewsId: " + bulletin.newsId);
-            vh1.getLabel5().setText("SourceUrl: " + bulletin.sourceUrl);
-            vh1.getLabel6().setText("ImageId: " + bulletin.imageId);
-            vh1.getLabel7().setText("ShowContent: " + bulletin.showContent);
+        List<Item> itms = cards.get(position).getMyItems();//should use it ?
+
+        if (!cards.get(position).getMyItems().isEmpty()) {
+            for(int i = 0; i < cards.get(position).getMyItems().size(); i++) {
+                try {
+                    JSONObject body = new JSONObject(cards.get(position).getMyItems().get(i).getBd());
+                    vh1.getLabel1().setText("Title: " +  body.getString("Title"));
+                    vh1.getLabel2().setText("PublishTS: " + body.getString("PublishTS"));
+                    vh1.getLabel3().setText("Snippet: " + body.getString("Snippet"));
+                    vh1.getLabel4().setText("NewsId: " + body.getString("NewsId"));
+                    vh1.getLabel5().setText("SourceUrl: " + body.getString("SourceUrl"));
+                    vh1.getLabel6().setText("ImageId: " + body.getString("ImageId"));
+                    vh1.getLabel7().setText("ShowContent: " + body.getString("ShowContent"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
     @SuppressLint("SetTextI18n")
     private void configureViewHolder2(ViewHolder2 vh2, int position) {
-        Opportunitymap opportunitymap = (Opportunitymap) items.get(position);
-        if(opportunitymap != null) {
-            vh2.getLabel1().setText("Title: " + Opportunitymap.title);
-            vh2.getLabel2().setText("Desc: " + Opportunitymap.desc);
-            vh2.getLabel3().setText("Url: " + Opportunitymap.url);
-            vh2.getLabel4().setText("SeriesCount: " + Opportunitymap.seriesCount);
+        List<Item> itms = cards.get(position).getMyItems();//should use it ?
+
+        if (!cards.get(position).getMyItems().isEmpty()) {
+            for (int i = 0; i < cards.get(position).getMyItems().size(); i++) {
+                try {
+                    JSONObject body = new JSONObject(cards.get(position).getMyItems().get(i).getBd());
+                    vh2.getLabel1().setText("Title: " + body.getString("Title"));
+                    vh2.getLabel2().setText("Desc: " + body.getString("Desc"));
+                    vh2.getLabel3().setText("Url: " + body.getString("Url"));
+                    vh2.getLabel4().setText("SeriesCount: " + body.getString("SeriesCount"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
+    /*
     public void onItemRemove(final ViewHolder viewHolder, final RecyclerView rv) {
         int adapterPosition = viewHolder.getAdapterPosition();
         final Object mItem = items.get(adapterPosition);
@@ -219,5 +237,5 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
         items.remove(adapterPosition);
         rv.removeViewAt(adapterPosition);
         this.notifyItemRemoved(adapterPosition);
-    }
+    }*/
 }

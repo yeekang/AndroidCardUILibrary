@@ -23,7 +23,7 @@ public class Retrieval {
             //s += c.getType() + "  " + c.getSubtype() + "\n";
             List<Item> items = c.getMyItems();
 
-            System.out.println(items.size());
+            //System.out.println(items.size());
 
             for (Item i : items) {
 
@@ -44,7 +44,7 @@ public class Retrieval {
                 //s += "\t" + i.getCdid() + " " + i.getImgid() + " " + i.getBd() + " " + i.getRmb() + " " + i.getCrts() + " " + i.getRdts() + "\n";
             }
 
-            System.out.println(items.size());
+            //System.out.println(items.size());
         }
         //System.out.println(s);
         //--------end--------
