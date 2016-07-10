@@ -28,9 +28,7 @@ public class Retrieval {
             for (Item i : items) {
 
                 //rdts flag -----
-                if(i.getRdts().isEmpty()) {
-
-                } else {
+                if(!i.getRdts().isEmpty()) {
                     items.remove(i);
                 }
                 //end ------
@@ -44,7 +42,7 @@ public class Retrieval {
                 //s += "\t" + i.getCdid() + " " + i.getImgid() + " " + i.getBd() + " " + i.getRmb() + " " + i.getCrts() + " " + i.getRdts() + "\n";
             }
 
-            //System.out.println(items.size());
+            System.out.println(items.size());
         }
         //System.out.println(s);
         //--------end--------

@@ -44,7 +44,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
         rv.setLayoutManager(llm);
         rv.setHasFixedSize(true);
 
-        initializeAdapter();
+        //initializeAdapter();
         setUpItemTouchHelp();
     }
 
@@ -103,9 +103,8 @@ public class RecyclerViewActivity extends AppCompatActivity {
 
 
     private void setUpItemTouchHelp() {
+        final RVAdapter adapter = new RVAdapter(new Retrieval().getDBCard());
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-
-            RVAdapter adapter = new RVAdapter(new Retrieval().getDBCard());
 
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -120,5 +119,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
 
         ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         mItemTouchHelper.attachToRecyclerView(rv);
+
+        rv.setAdapter(adapter);
     }
 }

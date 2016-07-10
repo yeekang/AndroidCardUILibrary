@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jhy.androidcarduilibrary.R;
+import com.jhy.androidcarduilibrary.database.SaveRDTS;
 import com.jhy.androidcarduilibrary.database.model.Card;
 import com.jhy.androidcarduilibrary.database.model.Item;
 
@@ -235,5 +236,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
         cards.remove(adapterPosition);
         rv.removeViewAt(adapterPosition);
         this.notifyItemRemoved(adapterPosition);
+
+        new SaveRDTS().saveRDTS(cItem.getMyItems().get(0));
     }
 }
