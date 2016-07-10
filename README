@@ -1,7 +1,9 @@
-### KANG PLS LOOK INTO RVADAPTER OF WHAT I CHANGED ###
-pls make the layout for transaction, else it wont work for u (i delete my transaction in db to run it)
+### KANG ###
+could u make the card only show if the card having item in it, (!card.items.isEmpty())
+it currently showing empty card with no content.
+tis happen when rdts is not null
 
 ### JET ###
-i have to comment out ur swipe function as i duno how it work yet, pls fix it ya.
+
 
 ## R U GUYS EVEN READING TIS ##
