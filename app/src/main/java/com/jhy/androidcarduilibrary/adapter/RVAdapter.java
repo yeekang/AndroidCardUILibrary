@@ -2,6 +2,7 @@ package com.jhy.androidcarduilibrary.adapter;
 
 import android.annotation.SuppressLint;
 
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,11 +15,11 @@ import com.jhy.androidcarduilibrary.R;
 import com.jhy.androidcarduilibrary.database.FlagingRDTS;
 import com.jhy.androidcarduilibrary.database.model.Card;
 import com.jhy.androidcarduilibrary.database.model.Item;
-
+import com.jhy.androidcarduilibrary.view.ScreenA;
+import com.jhy.androidcarduilibrary.view.ScreenB;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 
 import java.util.List;
 
@@ -45,9 +46,13 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
             switch(getPosition()){
                 case 0:
                     Log.d("aa","First one tapped!");
+                    Intent intent1 = new Intent(view.getContext(),ScreenA.class);
+                    (view.getContext()).startActivity(intent1);
                     break;
                 case 1:
                     Log.d("aa","Second one tapped!");
+                    Intent intent2 = new Intent(view.getContext(),ScreenB.class);
+                    (view.getContext()).startActivity(intent2);
                     break;
                 case 2:
                     Log.d("aa","Third one tapped!");

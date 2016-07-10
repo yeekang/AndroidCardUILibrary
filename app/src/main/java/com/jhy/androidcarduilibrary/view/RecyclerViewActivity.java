@@ -12,17 +12,10 @@ import com.jhy.androidcarduilibrary.R;
 import com.jhy.androidcarduilibrary.adapter.RVAdapter;
 import com.jhy.androidcarduilibrary.database.CardDB;
 import com.jhy.androidcarduilibrary.database.Retrieval;
-import com.jhy.androidcarduilibrary.database.model.Card;
-import com.jhy.androidcarduilibrary.database.model.Item;
 import com.jhy.androidcarduilibrary.network.Connection;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class RecyclerViewActivity extends AppCompatActivity {
 
@@ -49,7 +42,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
         rv.setLayoutManager(llm);
         rv.setHasFixedSize(true);
 
-        //initializeAdapter();
+        initializeAdapter();
         setUpItemTouchHelp();
     }
 
@@ -78,7 +71,5 @@ public class RecyclerViewActivity extends AppCompatActivity {
 
         ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         mItemTouchHelper.attachToRecyclerView(rv);
-
-        rv.setAdapter(adapter);
     }
 }
