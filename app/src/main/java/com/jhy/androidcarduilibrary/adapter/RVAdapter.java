@@ -216,24 +216,24 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
         }
     }
 
-    /*
+
     public void onItemRemove(final ViewHolder viewHolder, final RecyclerView rv) {
         int adapterPosition = viewHolder.getAdapterPosition();
-        final Object mItem = items.get(adapterPosition);
+        final Card cItem = cards.get(adapterPosition);
         Snackbar snackbar = Snackbar
                 .make(rv, "Archieved", Snackbar.LENGTH_LONG)
                 .setAction("UNDO", new View.OnClickListener(){
                     @Override
                     public void onClick(View view){
                         int mAdapterPosition = viewHolder.getAdapterPosition();
-                        items.add(mAdapterPosition,mItem);
+                        cards.add(mAdapterPosition,cItem);
                         notifyItemInserted(mAdapterPosition);
                         rv.scrollToPosition(mAdapterPosition);
                     }
                 });
         snackbar.show();
-        items.remove(adapterPosition);
+        cards.remove(adapterPosition);
         rv.removeViewAt(adapterPosition);
         this.notifyItemRemoved(adapterPosition);
-    }*/
+    }
 }
