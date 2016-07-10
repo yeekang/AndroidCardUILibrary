@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.jhy.androidcarduilibrary.Bulletin;
-import com.jhy.androidcarduilibrary.Opportunitymap;
 import com.jhy.androidcarduilibrary.R;
 import com.jhy.androidcarduilibrary.database.model.Card;
 import com.jhy.androidcarduilibrary.database.model.Item;

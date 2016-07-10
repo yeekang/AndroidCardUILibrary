@@ -8,8 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
-import com.jhy.androidcarduilibrary.Bulletin;
-import com.jhy.androidcarduilibrary.Opportunitymap;
 import com.jhy.androidcarduilibrary.R;
 import com.jhy.androidcarduilibrary.adapter.RVAdapter;
 import com.jhy.androidcarduilibrary.database.CardDB;
