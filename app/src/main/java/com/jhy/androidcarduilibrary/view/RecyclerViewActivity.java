@@ -2,6 +2,7 @@ package com.jhy.androidcarduilibrary.view;
 
 
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +21,7 @@ import com.raizlabs.android.dbflow.config.FlowManager;
 public class RecyclerViewActivity extends AppCompatActivity {
 
     RecyclerView rv;
+    SwipeRefreshLayout swipeContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +32,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
 
 
         //pls make refresh function for tis
-        new Connection().getJSON(this);
+        //new Connection().getJSON(this);
 
 
         //new Retrieval().getDBCard();
@@ -42,8 +44,18 @@ public class RecyclerViewActivity extends AppCompatActivity {
         rv.setLayoutManager(llm);
         rv.setHasFixedSize(true);
 
-        initializeAdapter();
-        setUpItemTouchHelp();
+        //initializeAdapter();
+        new Setup().setUpItemTouchHelp(rv);
+
+        //find swipe container
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        //setup for refresh listener
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Connection().getJSON(RecyclerViewActivity.this, rv, swipeContainer);
+            }
+        });
     }
 
 
@@ -51,25 +63,5 @@ public class RecyclerViewActivity extends AppCompatActivity {
         // Bind adapter to recycler view object
         RVAdapter adapter = new RVAdapter(new Retrieval().getDBCard());
         rv.setAdapter(adapter);
-    }
-
-
-    private void setUpItemTouchHelp() {
-        final RVAdapter adapter = new RVAdapter(new Retrieval().getDBCard());
-        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
-                adapter.onItemRemove((RVAdapter.ViewHolder) viewHolder,rv);
-            }
-        };
-
-        ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-        mItemTouchHelper.attachToRecyclerView(rv);
     }
 }

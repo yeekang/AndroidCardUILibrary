@@ -1,6 +1,8 @@
 package com.jhy.androidcarduilibrary.network;
 
 import android.content.Context;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -9,6 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.jhy.androidcarduilibrary.view.Setup;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +24,7 @@ public class Connection {
     private String SIMPLE_CARD_URL = "http://www.jiran.org.my:8082/ACLWS/api/v1/simpleCards";
     private String MODERATE_CARD_URL = "http://www.jiran.org.my:8082/ACLWS/api/v1/moderateCards";
 
-    public void getJSON(final Context context) {
+    public void getJSON(final Context context, final RecyclerView rv, final SwipeRefreshLayout sc) {
 
         StringRequest sr = new StringRequest(SIMPLE_CARD_URL,
                 new Response.Listener<String>() {
@@ -29,6 +32,9 @@ public class Connection {
                     public void onResponse(String response) {
                         //System.out.println(response);
                         new ParseJSON().parseJSON(response);
+                        new Setup().setUpItemTouchHelp(rv);
+                        sc.setRefreshing(false);
+
                     }
                 },
                 new Response.ErrorListener() {
