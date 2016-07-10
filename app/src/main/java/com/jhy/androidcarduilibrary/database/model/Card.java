@@ -25,7 +25,7 @@ public class Card extends BaseModel{
     @Column
     String subtype;
 
-    private List<Item> items;
+    public List<Item> items;
 
     public String getType() {return type;}
     public String getSubtype() {return subtype;}

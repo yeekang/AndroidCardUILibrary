@@ -34,7 +34,12 @@ public class RecyclerViewActivity extends AppCompatActivity {
 
         FlowManager.init(new FlowConfig.Builder(this).openDatabasesOnInit(true).build());
         FlowManager.getDatabase(CardDB.class).getWritableDatabase();
+
+
+        //pls make refresh function for tis
         new Connection().getJSON(this);
+
+
         //new Retrieval().getDBCard();
         setContentView(R.layout.recycler_view);
 
@@ -48,52 +53,6 @@ public class RecyclerViewActivity extends AppCompatActivity {
         setUpItemTouchHelp();
     }
 
-    /*
-    private ArrayList<Object> getSampleArrayList() {
-        ArrayList<Object> items = new ArrayList<>();
-        //items.add(new Bulletin("Quick Bites - Malaysia Airports Holdings", "2016-06-13T00:17:00", "May’s Passenger Traffic Snapshot", "3B10776F-4539-4398-AE78-1E682A121D06", "http://www.kenanga.com.my/general/kenanga-today", "A3B799E3-16F0-4637-BB88-79268D8EA79E", "Y"));
-        //items.add(new Bulletin("Quick Bites - Malaysia Airports Holdings", "2016-06-13T00:17:00", "May’s Passenger Traffic Snapshot", "3B10776F-4539-4398-AE78-1E682A121D06", "http://www.kenanga.com.my/general/kenanga-today", "A3B799E3-16F0-4637-BB88-79268D8EA79E", "Y"));
-        //items.add(new Opportunitymap("New opportunity map is available!", "", "", 117));
-
-        List<Card> cards = new Retrieval().getDBCard();
-        for (Card c : cards) {
-            switch (c.getType()) {
-                case "BULLETIN" : {
-                    for (Item item : c.getMyItems()) {
-                        try {
-                            JSONObject body = new JSONObject(item.getBd());
-                            items.add(new Bulletin(body.getString("Title"),body.getString("PublishTS"),
-                                    body.getString("Snippet"), body.getString("NewsId"),body.getString("SourceUrl"),
-                                    body.getString("ImageId"),body.getString("ShowContent")));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    break ;
-                }
-                case "OPPORTUNITYMAP" : {
-                    for (Item item : c.getMyItems()) {
-                        try {
-                            JSONObject body = new JSONObject(item.getBd());
-                            items.add(new Opportunitymap(body.getString("Title"),body.getString("Desc"),
-                                    body.getString("Url"), body.getInt("SeriesCount")));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    break;
-                }
-                case "TRANSACTION" : {
-                    break;
-                }
-                default: break;
-            }
-        }
-        //items.add(new Bulletin("Quick Bites - Malaysia Airports Holdings", "2016-06-13T00:17:00", "May’s Passenger Traffic Snapshot", "3B10776F-4539-4398-AE78-1E682A121D06", "http://www.kenanga.com.my/general/kenanga-today", "A3B799E3-16F0-4637-BB88-79268D8EA79E", "Y"));
-        //items.add(new Opportunitymap("New opportunity map is available!", "", "", 117));
-
-        return items;
-    }*/
 
     private void initializeAdapter() {
         // Bind adapter to recycler view object

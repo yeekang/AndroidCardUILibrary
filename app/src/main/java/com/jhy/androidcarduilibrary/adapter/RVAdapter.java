@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jhy.androidcarduilibrary.R;
-import com.jhy.androidcarduilibrary.database.SaveRDTS;
+import com.jhy.androidcarduilibrary.database.FlagingRDTS;
 import com.jhy.androidcarduilibrary.database.model.Card;
 import com.jhy.androidcarduilibrary.database.model.Item;
 
@@ -27,7 +27,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
     private final int BULLETIN = 0, OPPORTUNITYMAP = 1, TRANSACTION = 2;
 
     private static List<Card> cards;
-    public RVAdapter(List<Card> cards) {this.cards = cards;}
+
+    public RVAdapter(List<Card> cards) {
+        this.cards = cards;
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -110,10 +113,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
     public int getItemViewType(int position) {
         if(cards.get(position).getType().equals("BULLETIN")) {
             return 0;
-        }
-        if(cards.get(position).getType().equals("OPPORTUNITYMAP")) {
+        } else if(cards.get(position).getType().equals("OPPORTUNITYMAP")) {
             return 1;
-        }else if(cards.get(position).getType().equals("TRANSACTION")){
+        } else if(cards.get(position).getType().equals("TRANSACTION")){
             return 2;
         }
         return -1;
@@ -160,7 +162,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
     @SuppressLint("SetTextI18n")
     private void configureViewHolder1(ViewHolder1 vh1, int position) {
-        List<Item> itms = cards.get(position).getMyItems();
+        List<Item> itms = cards.get(position).items;
 
         if (!itms.isEmpty()) {
             for(int i = 0; i < itms.size(); i++) {
@@ -182,7 +184,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
     @SuppressLint("SetTextI18n")
     private void configureViewHolder2(ViewHolder2 vh2, int position) {
-        List<Item> itms = cards.get(position).getMyItems();
+        List<Item> itms = cards.get(position).items;
 
         if (!itms.isEmpty()) {
             for (int i = 0; i < itms.size(); i++) {
@@ -201,7 +203,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
     @SuppressLint("SetTextI18n")
     private void configureViewHolder3(ViewHolder3 vh3, int position) {
-        List<Item> itms = cards.get(position).getMyItems();
+        List<Item> itms = cards.get(position).items;
 
         if (!itms.isEmpty()) {
             for(int i = 0; i < itms.size(); i++) {
@@ -233,6 +235,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
                         cards.add(mAdapterPosition,cItem);
                         notifyItemInserted(mAdapterPosition);
                         rv.scrollToPosition(mAdapterPosition);
+                        new FlagingRDTS().resetRDTS(cItem.items.get(0));//need to make change for multi list do not use get(0)
                     }
                 });
         snackbar.show();
@@ -240,6 +243,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
         rv.removeViewAt(adapterPosition);
         this.notifyItemRemoved(adapterPosition);
 
-        new SaveRDTS().saveRDTS(cItem.getMyItems().get(0));
+        new FlagingRDTS().saveRDTS(cItem.items.get(0));//need to make change for multi list
     }
 }
