@@ -7,6 +7,7 @@ import com.raizlabs.android.dbflow.sql.language.SQLite;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,6 +18,7 @@ public class Retrieval {
     public List<Card> getDBCard() {
         List<Card> cards = SQLite.select().from(Card.class).queryList();
 
+        List<Card> cardsToRemove = new ArrayList<>();
         for (Card c : cards) {
             List<Item> items = c.getMyItems();
             for (Item i : items) {
@@ -26,7 +28,11 @@ public class Retrieval {
                 }
                 //end ------
             }
+
+            if (items.size() == 0) cardsToRemove.add(c);
         }
+
+        cards.removeAll(cardsToRemove);
 
         return cards;
     }

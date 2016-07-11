@@ -116,6 +116,15 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
     }
 
     public int getItemViewType(int position) {
+//        String type = cards.get(position).getType();
+//
+//        for (int i = 0 ; i < itemViewTypes.size() ; i++) {
+//            if (type.equalsIgnoreCase(itemViewTypes.get(i)))
+//                return i;
+//        }
+//
+//        return -1;
+
         if(cards.get(position).getType().equals("BULLETIN")) {
             return 0;
         } else if(cards.get(position).getType().equals("OPPORTUNITYMAP")) {
