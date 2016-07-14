@@ -1,0 +1,8 @@
+dummy library only provide a cardview using layout similar to item2.xml in main app. text value are hardcoded, in TestThis.java in library directory.
+
+code changed in app file to show usage of library:
+    - RecyclerViewActivity.java : line 35 to 59.
+    - gradle : line 57.
+
+
+changes need to be made on RVAdapter to allow it work as library.
