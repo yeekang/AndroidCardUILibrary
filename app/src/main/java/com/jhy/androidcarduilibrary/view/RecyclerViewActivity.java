@@ -14,6 +14,7 @@ import com.jhy.androidcarduilibrary.adapter.RVAdapter;
 import com.jhy.androidcarduilibrary.database.CardDB;
 import com.jhy.androidcarduilibrary.database.Retrieval;
 import com.jhy.androidcarduilibrary.network.Connection;
+import com.jhy.uselesslibrary.TestThis;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
@@ -31,12 +32,12 @@ public class RecyclerViewActivity extends AppCompatActivity {
         FlowManager.getDatabase(CardDB.class).getWritableDatabase();
 
 
-        //pls make refresh function for tis
-        //new Connection().getJSON(this);
+        //using card from library (similar to item2.xml)
+        setContentView(new TestThis(this));
 
 
-        //new Retrieval().getDBCard();
-        setContentView(R.layout.recycler_view);
+        //original recyclerview is tis
+        /*setContentView(R.layout.recycler_view);
 
         rv = (RecyclerView) findViewById(R.id.rv);
 
@@ -52,16 +53,12 @@ public class RecyclerViewActivity extends AppCompatActivity {
         //setup for refresh listener
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onRefresh() {
+            public void onRefresh() {//refresh data get from internet
                 new Connection().getJSON(RecyclerViewActivity.this, rv, swipeContainer);
             }
-        });
+        });*/
+
     }
 
 
-    private void initializeAdapter() {
-        // Bind adapter to recycler view object
-        RVAdapter adapter = new RVAdapter(new Retrieval().getDBCard());
-        rv.setAdapter(adapter);
-    }
 }
