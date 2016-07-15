@@ -6,3 +6,6 @@ code changed in app file to show usage of library:
 
 
 changes need to be made on RVAdapter to allow it work as library.
+
+configure table
+delete from card where type ='BULLETIN' OR type='OPPORTUNITYMAP' OR type='TRANSACTION' OR type='QUICKBITES';
