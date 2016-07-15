@@ -7,7 +7,7 @@
     android:layout_margin="8dp"
     android:foreground="?android:attr/selectableItemBackground"
     card_view:cardCornerRadius="4dp"
-    card_view:cardBackgroundColor="#E040FB"
+    card_view:cardBackgroundColor="#0000ff"
     card_view:cardElevation="4dp"
     >
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -18,6 +18,12 @@
 
     <TextView
         android:id="@+id/text1"
+        android:textColor="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/text2"
         android:textColor="#ffffff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

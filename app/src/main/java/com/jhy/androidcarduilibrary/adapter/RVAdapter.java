@@ -33,6 +33,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
     private static List<Card> cards;
 
+    public RVAdapter(List<Card> cards) {
+        this.cards = cards;
+    }
+
+
     public RVAdapter(List<Card> cards, Context context) {
         this.cards = cards;
         this.context = context;
@@ -283,29 +288,41 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
         List<Item> itms = cards.get(position).items;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 
-        if (!itms.isEmpty()) {
-            for(int i = 0; i < itms.size(); i++) {
-                        try {
-                            View x = inflater.inflate(R.layout.item4,null);
-                            JSONObject body = new JSONObject(itms.get(i).getBd());
-                            vh4.label1.setText("SeriesId: " +  body.getString("SeriesId"));
-                            vh4.label2.setText("SeriesCode: " + body.getString("SeriesCode"));
-                            vh4.label3.setText("ShortName: " + body.getString("ShortName"));
-                            vh4.label4.setText("SeriesName: " + body.getString("SeriesName"));
-                            vh4.label5.setText("ResearchTitle: " + body.getString("ResearchTitle"));
-                            vh4.label6.setText("ResearchHouse: " + body.getString("ResearchHouse"));
-                            vh4.label7.setText("TargetPrice: " + body.getString("TargetPrice"));
-                            vh4.label8.setText("LastPrice: " + body.getString("LastPrice"));
-                            vh4.label9.setText("Recommendation: " + body.getString("Recommendation"));
-                            vh4.label10.setText("Url: " + body.getString("Url"));
+        vh4.label1.setText("research report");
 
+        for(int i = 0; i < itms.size(); i++) {
+            View x = inflater.inflate(R.layout.item4,null);
+            TextView label1 = (TextView) x.findViewById(R.id.text1);
+            TextView label2 = (TextView) x.findViewById(R.id.text2);
+            TextView label3 = (TextView) x.findViewById(R.id.text3);
+            TextView label4 = (TextView) x.findViewById(R.id.text4);
+            TextView label5 = (TextView) x.findViewById(R.id.text5);
+            TextView label6 = (TextView) x.findViewById(R.id.text6);
+            TextView label7 = (TextView) x.findViewById(R.id.text7);
+            TextView label8 = (TextView) x.findViewById(R.id.text8);
+            TextView label9 = (TextView) x.findViewById(R.id.text9);
+            TextView label10 = (TextView) x.findViewById(R.id.text10);
 
-                            vh4.ll4.addView(x);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+            try {
+                JSONObject body = new JSONObject(itms.get(i).getBd());
+
+                label1.setText("SeriesId: " +  body.getString("SeriesId"));
+                label2.setText("SeriesCode: " + body.getString("SeriesCode"));
+                label3.setText("ShortName: " + body.getString("ShortName"));
+                label4.setText("SeriesName: " + body.getString("SeriesName"));
+                label5.setText("ResearchTitle: " + body.getString("ResearchTitle"));
+                label6.setText("ResearchHouse: " + body.getString("ResearchHouse"));
+                label7.setText("TargetPrice: " + body.getString("TargetPrice"));
+                label8.setText("LastPrice: " + body.getString("LastPrice"));
+                label9.setText("Recommendation: " + body.getString("Recommendation"));
+                label10.setText("Url: " + body.getString("Url"));
+
+                vh4.ll4.addView(x);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
+
     }
 
     public void onItemRemove(final ViewHolder viewHolder, final RecyclerView rv) {
