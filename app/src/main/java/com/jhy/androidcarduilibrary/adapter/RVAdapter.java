@@ -2,6 +2,7 @@ package com.jhy.androidcarduilibrary.adapter;
 
 import android.annotation.SuppressLint;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jhy.androidcarduilibrary.R;
@@ -27,11 +29,13 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
     private final int BULLETIN = 0, OPPORTUNITYMAP = 1, TRANSACTION = 2;
     private final int RESEARCHREPORT = 3;
+    private Context context;
 
     private static List<Card> cards;
 
-    public RVAdapter(List<Card> cards) {
+    public RVAdapter(List<Card> cards, Context context) {
         this.cards = cards;
+        this.context = context;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -112,42 +116,26 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
     public class ViewHolder4 extends RVAdapter.ViewHolder {
 
+        private LinearLayout ll4;
         private TextView label1, label2, label3, label4, label5, label6, label7,label8,label9,label10;
-        private TextView label11, label12, label13, label14, label15, label16, label17,label18,label19,label20;
-        private TextView label21, label22, label23, label24, label25, label26, label27,label28,label29,label30;
 
         public ViewHolder4(View v) {
             super(v);
-            label1 = (TextView) v.findViewById(R.id.text1);
-            label2 = (TextView) v.findViewById(R.id.text2);
-            label3 = (TextView) v.findViewById(R.id.text3);
-            label4 = (TextView) v.findViewById(R.id.text4);
-            label5 = (TextView) v.findViewById(R.id.text5);
-            label6 = (TextView) v.findViewById(R.id.text6);
-            label7 = (TextView) v.findViewById(R.id.text7);
-            label8 = (TextView) v.findViewById(R.id.text8);
-            label9 = (TextView) v.findViewById(R.id.text9);
-            label10 = (TextView) v.findViewById(R.id.text10);
-            label11 = (TextView) v.findViewById(R.id.text11);
-            label12 = (TextView) v.findViewById(R.id.text12);
-            label13 = (TextView) v.findViewById(R.id.text13);
-            label14 = (TextView) v.findViewById(R.id.text14);
-            label15 = (TextView) v.findViewById(R.id.text15);
-            label16 = (TextView) v.findViewById(R.id.text16);
-            label17 = (TextView) v.findViewById(R.id.text17);
-            label18 = (TextView) v.findViewById(R.id.text18);
-            label19 = (TextView) v.findViewById(R.id.text19);
-            label20 = (TextView) v.findViewById(R.id.text20);
-            label21 = (TextView) v.findViewById(R.id.text21);
-            label22 = (TextView) v.findViewById(R.id.text22);
-            label23 = (TextView) v.findViewById(R.id.text23);
-            label24 = (TextView) v.findViewById(R.id.text24);
-            label25 = (TextView) v.findViewById(R.id.text25);
-            label26 = (TextView) v.findViewById(R.id.text26);
-            label27 = (TextView) v.findViewById(R.id.text27);
-            label28 = (TextView) v.findViewById(R.id.text28);
-            label29 = (TextView) v.findViewById(R.id.text29);
-            label30 = (TextView) v.findViewById(R.id.text30);
+            ll4 = (LinearLayout) v.findViewById(R.id.card4);
+            label1 = (TextView) ll4.findViewById(R.id.text1);
+            label2 = (TextView) ll4.findViewById(R.id.text2);
+            label3 = (TextView) ll4.findViewById(R.id.text3);
+            label4 = (TextView) ll4.findViewById(R.id.text4);
+            label5 = (TextView) ll4.findViewById(R.id.text5);
+            label6 = (TextView) ll4.findViewById(R.id.text6);
+            label7 = (TextView) ll4.findViewById(R.id.text7);
+            label8 = (TextView) ll4.findViewById(R.id.text8);
+            label9 = (TextView) ll4.findViewById(R.id.text9);
+            label10 = (TextView) ll4.findViewById(R.id.text10);
+
+
+
+            // multi... .addView(mini)
         }
     }
 
@@ -197,7 +185,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
                 viewHolder = new ViewHolder3(v3);
                 break;
             case RESEARCHREPORT:
-                View v4 = inflater.inflate(R.layout.item4, viewGroup, false);
+                View v4 = inflater.inflate(R.layout.maincard_item_4, viewGroup, false);
                 viewHolder = new ViewHolder4(v4);
                 break;
         }
@@ -234,7 +222,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
             for(int i = 0; i < itms.size(); i++) {
                 try {
                     JSONObject body = new JSONObject(itms.get(i).getBd());
-
                         vh1.label1.setText("Title: " + body.getString("Title"));
                         vh1.label2.setText("PublishTS: " + body.getString("PublishTS"));
                         vh1.label3.setText("Snippet: " + body.getString("Snippet"));
@@ -294,12 +281,12 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
     @SuppressLint("SetTextI18n")
     private void configureViewHolder4(ViewHolder4 vh4, int position) {
         List<Item> itms = cards.get(position).items;
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 
         if (!itms.isEmpty()) {
             for(int i = 0; i < itms.size(); i++) {
-                switch(i){
-                    case 0:
                         try {
+                            View x = inflater.inflate(R.layout.item4,null);
                             JSONObject body = new JSONObject(itms.get(i).getBd());
                             vh4.label1.setText("SeriesId: " +  body.getString("SeriesId"));
                             vh4.label2.setText("SeriesCode: " + body.getString("SeriesCode"));
@@ -311,50 +298,12 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
                             vh4.label8.setText("LastPrice: " + body.getString("LastPrice"));
                             vh4.label9.setText("Recommendation: " + body.getString("Recommendation"));
                             vh4.label10.setText("Url: " + body.getString("Url"));
+
+
+                            vh4.ll4.addView(x);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        break;
-                    case 1:
-                        try {
-                            JSONObject body = new JSONObject(itms.get(i).getBd());
-                            vh4.label11.setText("SeriesId: " +  body.getString("SeriesId"));
-                            vh4.label12.setText("SeriesCode: " + body.getString("SeriesCode"));
-                            vh4.label13.setText("ShortName: " + body.getString("ShortName"));
-                            vh4.label14.setText("SeriesName: " + body.getString("SeriesName"));
-                            vh4.label15.setText("ResearchTitle: " + body.getString("ResearchTitle"));
-                            vh4.label16.setText("ResearchHouse: " + body.getString("ResearchHouse"));
-                            vh4.label17.setText("TargetPrice: " + body.getString("TargetPrice"));
-                            vh4.label18.setText("LastPrice: " + body.getString("LastPrice"));
-                            vh4.label19.setText("Recommendation: " + body.getString("Recommendation"));
-                            vh4.label20.setText("Url: " + body.getString("Url"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    case 2:
-                        try {
-                            JSONObject body = new JSONObject(itms.get(i).getBd());
-                            vh4.label21.setText("SeriesId: " +  body.getString("SeriesId"));
-                            vh4.label22.setText("SeriesCode: " + body.getString("SeriesCode"));
-                            vh4.label23.setText("ShortName: " + body.getString("ShortName"));
-                            vh4.label24.setText("SeriesName: " + body.getString("SeriesName"));
-                            vh4.label25.setText("ResearchTitle: " + body.getString("ResearchTitle"));
-                            vh4.label26.setText("ResearchHouse: " + body.getString("ResearchHouse"));
-                            vh4.label27.setText("TargetPrice: " + body.getString("TargetPrice"));
-                            vh4.label28.setText("LastPrice: " + body.getString("LastPrice"));
-                            vh4.label29.setText("Recommendation: " + body.getString("Recommendation"));
-                            vh4.label30.setText("Url: " + body.getString("Url"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    default :
-                        break;
-
-
-
-                }
             }
         }
     }
