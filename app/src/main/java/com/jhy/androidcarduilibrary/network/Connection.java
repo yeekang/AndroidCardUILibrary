@@ -26,7 +26,7 @@ public class Connection {
 
     public void getJSON(final Context context, final RecyclerView rv, final SwipeRefreshLayout sc) {
 
-        StringRequest sr = new StringRequest(SIMPLE_CARD_URL,
+        StringRequest sr = new StringRequest(MODERATE_CARD_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -47,7 +47,7 @@ public class Connection {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<String, String>();
-                        params.put("redirect_uri", SIMPLE_CARD_URL);
+                        params.put("redirect_uri", MODERATE_CARD_URL);
                         return params;
                     }
 

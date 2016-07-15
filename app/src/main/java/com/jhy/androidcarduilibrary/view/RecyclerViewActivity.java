@@ -33,11 +33,11 @@ public class RecyclerViewActivity extends AppCompatActivity {
 
 
         //using card from library (similar to item2.xml)
-        setContentView(new TestThis(this));
+       // setContentView(new TestThis(this));
 
 
         //original recyclerview is tis
-        /*setContentView(R.layout.recycler_view);
+        setContentView(R.layout.recycler_view);
 
         rv = (RecyclerView) findViewById(R.id.rv);
 
@@ -56,7 +56,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
             public void onRefresh() {//refresh data get from internet
                 new Connection().getJSON(RecyclerViewActivity.this, rv, swipeContainer);
             }
-        });*/
+        });
 
     }
 
