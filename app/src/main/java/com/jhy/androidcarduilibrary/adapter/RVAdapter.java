@@ -28,7 +28,7 @@ import java.util.List;
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
 
     private final int BULLETIN = 0, OPPORTUNITYMAP = 1, TRANSACTION = 2;
-    private final int RESEARCHREPORT = 3;
+    private final int RESEARCHREPORT = 3, QUICKBITES = 4;
     private Context context;
 
     private static List<Card> cards;
@@ -122,28 +122,28 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
     public class ViewHolder4 extends RVAdapter.ViewHolder {
 
         private LinearLayout ll4;
-        private TextView label1, label2, label3, label4, label5, label6, label7,label8,label9,label10;
+        private TextView label1, label2;
 
         public ViewHolder4(View v) {
             super(v);
             ll4 = (LinearLayout) v.findViewById(R.id.card4);
             label1 = (TextView) ll4.findViewById(R.id.text1);
             label2 = (TextView) ll4.findViewById(R.id.text2);
-            label3 = (TextView) ll4.findViewById(R.id.text3);
-            label4 = (TextView) ll4.findViewById(R.id.text4);
-            label5 = (TextView) ll4.findViewById(R.id.text5);
-            label6 = (TextView) ll4.findViewById(R.id.text6);
-            label7 = (TextView) ll4.findViewById(R.id.text7);
-            label8 = (TextView) ll4.findViewById(R.id.text8);
-            label9 = (TextView) ll4.findViewById(R.id.text9);
-            label10 = (TextView) ll4.findViewById(R.id.text10);
-
-
-
-            // multi... .addView(mini)
         }
     }
 
+    public class ViewHolder5 extends RVAdapter.ViewHolder {
+
+        private LinearLayout ll5;
+        private TextView label1, label2;
+
+        public ViewHolder5(View v) {
+            super(v);
+            ll5 = (LinearLayout) v.findViewById(R.id.card5);
+            label1 = (TextView) ll5.findViewById(R.id.text1);
+            label2 = (TextView) ll5.findViewById(R.id.text2);
+        }
+    }
     @Override
     public int getItemCount() {
         return cards.size();
@@ -167,6 +167,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
             return 2;
         }else if(cards.get(position).getType().equals("RESEARCHREPORT")){
             return 3;
+        }else if(cards.get(position).getType().equals("QUICKBITES")){
+            return 4;
         }
         return -1;
     }
@@ -193,6 +195,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
                 View v4 = inflater.inflate(R.layout.maincard_item_4, viewGroup, false);
                 viewHolder = new ViewHolder4(v4);
                 break;
+            case QUICKBITES:
+                View v5 = inflater.inflate(R.layout.maincard_item_5, viewGroup, false);
+                viewHolder = new ViewHolder5(v5);
+                break;
         }
         return viewHolder;
     }
@@ -215,6 +221,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
             case RESEARCHREPORT:
                 ViewHolder4 vh4 = (ViewHolder4) viewHolder;
                 configureViewHolder4(vh4, position);
+                break;
+            case QUICKBITES:
+                ViewHolder5 vh5 = (ViewHolder5) viewHolder;
+                configureViewHolder5(vh5, position);
                 break;
         }
     }
@@ -318,6 +328,50 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>{
                 label10.setText("Url: " + body.getString("Url"));
 
                 vh4.ll4.addView(x);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void configureViewHolder5(ViewHolder5 vh5, int position) {
+        List<Item> itms = cards.get(position).items;
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+
+        vh5.label1.setText("QuickBites");
+
+        for(int i = 0; i < itms.size(); i++) {
+            View x = inflater.inflate(R.layout.item5,null);
+            TextView label1 = (TextView) x.findViewById(R.id.text1);
+            TextView label2 = (TextView) x.findViewById(R.id.text2);
+            TextView label3 = (TextView) x.findViewById(R.id.text3);
+            TextView label4 = (TextView) x.findViewById(R.id.text4);
+            TextView label5 = (TextView) x.findViewById(R.id.text5);
+            TextView label6 = (TextView) x.findViewById(R.id.text6);
+            TextView label7 = (TextView) x.findViewById(R.id.text7);
+            TextView label8 = (TextView) x.findViewById(R.id.text8);
+            TextView label9 = (TextView) x.findViewById(R.id.text9);
+            TextView label10 = (TextView) x.findViewById(R.id.text10);
+            TextView label11 = (TextView) x.findViewById(R.id.text11);
+
+            try {
+                JSONObject body = new JSONObject(itms.get(i).getBd());
+
+                label1.setText("Title: " +  body.getString("Title"));
+                label2.setText("PublishTS: " + body.getString("PublishTS"));
+                label3.setText("Snippet: " + body.getString("Snippet"));
+                label4.setText("NewsId: " + body.getString("NewsId"));
+                label5.setText("SourceUrl: " + body.getString("SourceUrl"));
+                label6.setText("ImageId: " + body.getString("ImageId"));
+                label7.setText("ShowContent: " + body.getString("ShowContent"));
+                label8.setText("SeriesId: " + body.getString("SeriesId"));
+                label9.setText("SeriesCode: " + body.getString("SeriesCode"));
+                label10.setText("ShortName: " + body.getString("ShortName"));
+                label11.setText("SeriesName: " + body.getString("SeriesName"));
+
+                vh5.ll5.addView(x);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
