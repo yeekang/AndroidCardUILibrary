@@ -32,7 +32,7 @@ public class Connection {
                     public void onResponse(String response) {
                         //System.out.println(response);
                         new ParseJSON().parseJSON(response);
-                        new Setup().setUpItemTouchHelp(rv);
+                        new Setup().setUpItemTouchHelp(rv, context);
                         sc.setRefreshing(false);
 
                     }

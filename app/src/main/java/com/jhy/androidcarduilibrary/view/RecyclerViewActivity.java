@@ -47,6 +47,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
 
         //initializeAdapter();
         final RVAdapter adapter = new RVAdapter(new Retrieval().getDBCard(), this);
+
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
             @Override

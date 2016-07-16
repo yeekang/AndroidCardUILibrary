@@ -1,5 +1,6 @@
 package com.jhy.androidcarduilibrary.view;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
@@ -10,8 +11,8 @@ import com.jhy.androidcarduilibrary.database.Retrieval;
  * Created by jhyha on 11-Jul-16.
  */
 public class Setup {
-    public void setUpItemTouchHelp(final RecyclerView rv) {
-        final RVAdapter adapter = new RVAdapter(new Retrieval().getDBCard());
+    public void setUpItemTouchHelp(final RecyclerView rv, Context context) {
+        final RVAdapter adapter = new RVAdapter(new Retrieval().getDBCard(), context);
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
             @Override
