@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -305,7 +306,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         vh4.label1.setText("research report");
 
         for (int i = 0; i < itms.size(); i++) {
-            View x = inflater.inflate(R.layout.item4, vh4.ll4, false);
+            View x = inflater.inflate(R.layout.item4, vh4.vg, false);
             TextView label1 = (TextView) x.findViewById(R.id.text1);
             TextView label2 = (TextView) x.findViewById(R.id.text2);
             TextView label3 = (TextView) x.findViewById(R.id.text3);
@@ -345,84 +346,90 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         vh5.label1.setText("QuickBites");
+        if (itms.size() < 3) {
+            for (int i = 0; i < itms.size(); i++) {
 
-        for (int i = 0; i < itms.size(); i++) {
-            // if (itms.size() < 3) {
-            View x = inflater.inflate(R.layout.item5, vh5.ll5, false);
-            TextView label1 = (TextView) x.findViewById(R.id.text1);
-            TextView label2 = (TextView) x.findViewById(R.id.text2);
-            TextView label3 = (TextView) x.findViewById(R.id.text3);
-            TextView label4 = (TextView) x.findViewById(R.id.text4);
-            TextView label5 = (TextView) x.findViewById(R.id.text5);
-            TextView label6 = (TextView) x.findViewById(R.id.text6);
-            TextView label7 = (TextView) x.findViewById(R.id.text7);
-            TextView label8 = (TextView) x.findViewById(R.id.text8);
-            TextView label9 = (TextView) x.findViewById(R.id.text9);
-            TextView label10 = (TextView) x.findViewById(R.id.text10);
-            TextView label11 = (TextView) x.findViewById(R.id.text11);
+                View x = inflater.inflate(R.layout.item5, vh5.vg, false);
+                TextView label1 = (TextView) x.findViewById(R.id.text1);
+                TextView label2 = (TextView) x.findViewById(R.id.text2);
+                TextView label3 = (TextView) x.findViewById(R.id.text3);
+                TextView label4 = (TextView) x.findViewById(R.id.text4);
+                TextView label5 = (TextView) x.findViewById(R.id.text5);
+                TextView label6 = (TextView) x.findViewById(R.id.text6);
+                TextView label7 = (TextView) x.findViewById(R.id.text7);
+                TextView label8 = (TextView) x.findViewById(R.id.text8);
+                TextView label9 = (TextView) x.findViewById(R.id.text9);
+                TextView label10 = (TextView) x.findViewById(R.id.text10);
+                TextView label11 = (TextView) x.findViewById(R.id.text11);
 
-            try {
-                JSONObject body = new JSONObject(itms.get(i).getBd());
+                try {
+                    JSONObject body = new JSONObject(itms.get(i).getBd());
 
-                label1.setText("Title: " + body.getString("Title"));
-                label2.setText("PublishTS: " + body.getString("PublishTS"));
-                label3.setText("Snippet: " + body.getString("Snippet"));
-                label4.setText("NewsId: " + body.getString("NewsId"));
-                label5.setText("SourceUrl: " + body.getString("SourceUrl"));
-                label6.setText("ImageId: " + body.getString("ImageId"));
-                label7.setText("ShowContent: " + body.getString("ShowContent"));
-                label8.setText("SeriesId: " + body.getString("SeriesId"));
-                label9.setText("SeriesCode: " + body.getString("SeriesCode"));
-                label10.setText("ShortName: " + body.getString("ShortName"));
-                label11.setText("SeriesName: " + body.getString("SeriesName"));
+                    label1.setText("Title: " + body.getString("Title"));
+                    label2.setText("PublishTS: " + body.getString("PublishTS"));
+                    label3.setText("Snippet: " + body.getString("Snippet"));
+                    label4.setText("NewsId: " + body.getString("NewsId"));
+                    label5.setText("SourceUrl: " + body.getString("SourceUrl"));
+                    label6.setText("ImageId: " + body.getString("ImageId"));
+                    label7.setText("ShowContent: " + body.getString("ShowContent"));
+                    label8.setText("SeriesId: " + body.getString("SeriesId"));
+                    label9.setText("SeriesCode: " + body.getString("SeriesCode"));
+                    label10.setText("ShortName: " + body.getString("ShortName"));
+                    label11.setText("SeriesName: " + body.getString("SeriesName"));
 
-                vh5.ll5.addView(x);
+                    vh5.ll5.addView(x);
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        } //else {
-        // for (int j = 0; j < 3; j++) {
-
-                  /*  View x = inflater.inflate(R.layout.item5, null);
-                    TextView label1 = (TextView) x.findViewById(R.id.text1);
-                    TextView label2 = (TextView) x.findViewById(R.id.text2);
-                    TextView label3 = (TextView) x.findViewById(R.id.text3);
-                    TextView label4 = (TextView) x.findViewById(R.id.text4);
-                    TextView label5 = (TextView) x.findViewById(R.id.text5);
-                    TextView label6 = (TextView) x.findViewById(R.id.text6);
-                    TextView label7 = (TextView) x.findViewById(R.id.text7);
-                    TextView label8 = (TextView) x.findViewById(R.id.text8);
-                    TextView label9 = (TextView) x.findViewById(R.id.text9);
-                    TextView label10 = (TextView) x.findViewById(R.id.text10);
-                    TextView label11 = (TextView) x.findViewById(R.id.text11);
-
-                    try {
-                        JSONObject body = new JSONObject(itms.get(j).getBd());
-
-                        label1.setText("Title: " + body.getString("Title"));
-                        label2.setText("PublishTS: " + body.getString("PublishTS"));
-                        label3.setText("Snippet: " + body.getString("Snippet"));
-                        label4.setText("NewsId: " + body.getString("NewsId"));
-                        label5.setText("SourceUrl: " + body.getString("SourceUrl"));
-                        label6.setText("ImageId: " + body.getString("ImageId"));
-                        label7.setText("ShowContent: " + body.getString("ShowContent"));
-                        label8.setText("SeriesId: " + body.getString("SeriesId"));
-                        label9.setText("SeriesCode: " + body.getString("SeriesCode"));
-                        label10.setText("ShortName: " + body.getString("ShortName"));
-                        label11.setText("SeriesName: " + body.getString("SeriesName"));
-
-                        vh5.ll5.addView(x);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                //
-            }*/
+            }
+        } else {
+            for (int j = 0; j < 3; j++) {
 
-      //  }
+                View x = inflater.inflate(R.layout.item5, vh5.vg, false);
+                TextView label1 = (TextView) x.findViewById(R.id.text1);
+                TextView label2 = (TextView) x.findViewById(R.id.text2);
+                TextView label3 = (TextView) x.findViewById(R.id.text3);
+                TextView label4 = (TextView) x.findViewById(R.id.text4);
+                TextView label5 = (TextView) x.findViewById(R.id.text5);
+                TextView label6 = (TextView) x.findViewById(R.id.text6);
+                TextView label7 = (TextView) x.findViewById(R.id.text7);
+                TextView label8 = (TextView) x.findViewById(R.id.text8);
+                TextView label9 = (TextView) x.findViewById(R.id.text9);
+                TextView label10 = (TextView) x.findViewById(R.id.text10);
+                TextView label11 = (TextView) x.findViewById(R.id.text11);
+
+                try {
+                    JSONObject body = new JSONObject(itms.get(j).getBd());
+
+                    label1.setText("Title: " + body.getString("Title"));
+                    label2.setText("PublishTS: " + body.getString("PublishTS"));
+                    label3.setText("Snippet: " + body.getString("Snippet"));
+                    label4.setText("NewsId: " + body.getString("NewsId"));
+                    label5.setText("SourceUrl: " + body.getString("SourceUrl"));
+                    label6.setText("ImageId: " + body.getString("ImageId"));
+                    label7.setText("ShowContent: " + body.getString("ShowContent"));
+                    label8.setText("SeriesId: " + body.getString("SeriesId"));
+                    label9.setText("SeriesCode: " + body.getString("SeriesCode"));
+                    label10.setText("ShortName: " + body.getString("ShortName"));
+                    label11.setText("SeriesName: " + body.getString("SeriesName"));
+
+                    vh5.ll5.addView(x);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            Button b = new Button(context);
+            b.setText("View More");
+            b.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, RecyclerView.LayoutParams.WRAP_CONTENT));
+            // b.setId(MY_BUTTON);
+            //b.setOnClickListener();
+            vh5.ll5.addView(b);
+        }
     }
+
+
 
     public void onItemRemove(final ViewHolder viewHolder, final RecyclerView rv) {
         int adapterPosition = viewHolder.getLayoutPosition();
@@ -436,11 +443,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                     public void onClick(View view){
                         int mAdapterPosition = viewHolder.getLayoutPosition();
 
-                        rv.addView(viewHolder.itemView);
+                        //rv.addView(viewHolder.itemView);
                         cards.add(mAdapterPosition,cItem);
                         notifyItemInserted(mAdapterPosition);
                         rv.scrollToPosition(mAdapterPosition);
-                        //new FlagingRDTS().resetRDTS(cItem.items.get(0));//need to make change for multi list do not use get(0)
+                        new FlagingRDTS().resetRDTS(cItem.items.get(0));//need to make change for multi list do not use get(0)
                     }
                 });
         snackbar.show();
@@ -448,9 +455,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         cards.remove(adapterPosition);
 
         rv.removeView(viewHolder.itemView);
-//        rv.removeViewAt(adapterPosition);
+      //rv.removeViewAt(adapterPosition);
         this.notifyItemRemoved(adapterPosition);
 
-        //new FlagingRDTS().saveRDTS(cItem.items.get(0));//need to make change for multi list
+        new FlagingRDTS().saveRDTS(cItem.items.get(0));//need to make change for multi list
     }
 }
