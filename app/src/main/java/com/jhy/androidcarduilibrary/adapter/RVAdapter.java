@@ -125,9 +125,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         private TextView label1, label2;
         private ViewGroup vg;
 
-        public ViewHolder4(View v, ViewGroup viewGroup) {
+        public ViewHolder4(View v) {
             super(v);
-            vg = viewGroup;
             ll4 = (LinearLayout) v.findViewById(R.id.card4);
             label1 = (TextView) ll4.findViewById(R.id.text1);
             label2 = (TextView) ll4.findViewById(R.id.text2);
@@ -198,7 +197,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                 break;
             case RESEARCHREPORT:
                 View v4 = inflater.inflate(R.layout.maincard_item_4, viewGroup, false);
-                viewHolder = new ViewHolder4(v4, viewGroup);
+                viewHolder = new ViewHolder4(v4);
                 break;
             case QUICKBITES:
                 View v5 = inflater.inflate(R.layout.maincard_item_5, viewGroup, false);
@@ -306,7 +305,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         vh4.label1.setText("research report");
 
         for (int i = 0; i < itms.size(); i++) {
-            View x = inflater.inflate(R.layout.item4, vh4.vg, false);
+            View x = inflater.inflate(R.layout.item4, vh4.ll4, false);
             TextView label1 = (TextView) x.findViewById(R.id.text1);
             TextView label2 = (TextView) x.findViewById(R.id.text2);
             TextView label3 = (TextView) x.findViewById(R.id.text3);
@@ -349,7 +348,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
         for (int i = 0; i < itms.size(); i++) {
             // if (itms.size() < 3) {
-            View x = inflater.inflate(R.layout.item5, vh5.vg, false);
+            View x = inflater.inflate(R.layout.item5, vh5.ll5, false);
             TextView label1 = (TextView) x.findViewById(R.id.text1);
             TextView label2 = (TextView) x.findViewById(R.id.text2);
             TextView label3 = (TextView) x.findViewById(R.id.text3);
@@ -427,13 +426,17 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
     public void onItemRemove(final ViewHolder viewHolder, final RecyclerView rv) {
         int adapterPosition = viewHolder.getLayoutPosition();
+
         final Card cItem = cards.get(adapterPosition);
+        
         Snackbar snackbar = Snackbar
                 .make(rv, "Archieved", Snackbar.LENGTH_LONG)
                 .setAction("UNDO", new View.OnClickListener(){
                     @Override
                     public void onClick(View view){
                         int mAdapterPosition = viewHolder.getLayoutPosition();
+
+                        rv.addView(viewHolder.itemView);
                         cards.add(mAdapterPosition,cItem);
                         notifyItemInserted(mAdapterPosition);
                         rv.scrollToPosition(mAdapterPosition);
@@ -441,8 +444,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                     }
                 });
         snackbar.show();
+
         cards.remove(adapterPosition);
-        rv.removeViewAt(adapterPosition);
+
+        rv.removeView(viewHolder.itemView);
+//        rv.removeViewAt(adapterPosition);
         this.notifyItemRemoved(adapterPosition);
 
         //new FlagingRDTS().saveRDTS(cItem.items.get(0));//need to make change for multi list
