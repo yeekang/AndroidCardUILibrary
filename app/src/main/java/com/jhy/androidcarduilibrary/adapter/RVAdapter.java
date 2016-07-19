@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jhy.androidcarduilibrary.R;
 import com.jhy.androidcarduilibrary.database.FlagingRDTS;
@@ -49,34 +50,12 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         this.recyclerView = recyclerView;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         public ViewHolder(View itemView) {
             super(itemView);
-            itemView.setClickable(true);
-            itemView.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View view) {
-            switch (getPosition()) {
-                case 0:
-                    Log.d("aa", "First one tapped!");
-                    Intent intent1 = new Intent(view.getContext(), ScreenA.class);
-                    (view.getContext()).startActivity(intent1);
-                    break;
-                case 1:
-                    Log.d("aa", "Second one tapped!");
-                    Intent intent2 = new Intent(view.getContext(), ScreenB.class);
-                    (view.getContext()).startActivity(intent2);
-                    break;
-                case 2:
-                    Log.d("aa", "Third one tapped!");
-                    break;
-                default:
-                    break;
-            }
-        }
     }
 
     public class ViewHolder1 extends RVAdapter.ViewHolder {
@@ -303,6 +282,47 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         }
     }
 
+    /**
+     * Click listener for items in list card.
+     */
+    private View.OnClickListener onItemClickListener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View view) {
+            // TODO: Item click listener logic here.
+            Log.d("", "Clicked here.");
+            Toast.makeText(context, "Clicked on inner item.", Toast.LENGTH_SHORT).show();
+        }
+
+    };
+
+    /**
+     * Swipe touch listener for items in list card.
+     * @param view View of item.
+     * @param pos Pos of item in list.
+     * @return Touch listener.
+     */
+    private SwipeDismissRecyclerViewItemTouchListener getItemTouchListener(View view, int pos) {
+        return new SwipeDismissRecyclerViewItemTouchListener(
+                recyclerView,
+                view,
+                pos,
+                new SwipeDismissRecyclerViewItemTouchListener.DismissCallbacks() {
+                    @Override
+                    public boolean canDismiss(Object token) {
+                        // TODO: Allow item to be dismissed or not.
+
+                        return true;
+                    }
+
+                    @Override
+                    public void onDismiss(View view, Object token) {
+                        // TODO: Dismiss logic here.
+                    }
+                }
+        );
+    }
+
     @SuppressLint("SetTextI18n")
     private void configureViewHolder4(ViewHolder4 vh4, int position) {
         if (vh4.ll4.getChildCount() == 4) {
@@ -317,24 +337,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         for (int i = 0; i < itms.size(); i++) {
             View x = inflater.inflate(R.layout.item4, vh4.ll4, false);
 
-            SwipeDismissRecyclerViewItemTouchListener touchListener = new SwipeDismissRecyclerViewItemTouchListener(
-                    recyclerView,
-                    x,
-                    i,
-                    new SwipeDismissRecyclerViewItemTouchListener.DismissCallbacks() {
-                        @Override
-                        public boolean canDismiss(Object token) {
-                            Log.d("", "dddd");
-                            return true;
-                        }
-
-                        @Override
-                        public void onDismiss(View view, Object token) {
-                            Log.d("", "Dismissing on layout: " + ((int)token));
-                        }
-                    }
-            );
-            x.setOnTouchListener(touchListener);
+            x.setOnTouchListener( getItemTouchListener(x, i) );
+            x.setOnClickListener(onItemClickListener);
 
             TextView label1 = (TextView) x.findViewById(R.id.text1);
             TextView label2 = (TextView) x.findViewById(R.id.text2);
@@ -504,4 +508,15 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
         new FlagingRDTS().saveRDTS(cItem.items.get(0));//need to make change for multi list
     }
+
+    public void update(List<Card> newCards) {
+        notifyItemRangeInserted(cards.size(), cards.size() + newCards.size());
+        cards.addAll(newCards);
+    }
+
+    public void deleteAll() {
+        notifyItemRangeRemoved(0, cards.size());
+        cards.clear();
+    }
+
 }

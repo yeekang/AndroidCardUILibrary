@@ -11,6 +11,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.jhy.androidcarduilibrary.adapter.RVAdapter;
+import com.jhy.androidcarduilibrary.database.Retrieval;
 import com.jhy.androidcarduilibrary.view.Setup;
 
 import java.util.HashMap;
@@ -24,7 +26,7 @@ public class Connection {
     private String SIMPLE_CARD_URL = "http://www.jiran.org.my:8082/ACLWS/api/v1/simpleCards";
     private String MODERATE_CARD_URL = "http://www.jiran.org.my:8082/ACLWS/api/v1/moderateCards";
 
-    public void getJSON(final Context context, final RecyclerView rv, final SwipeRefreshLayout sc) {
+    public void getJSON(final Context context, final RVAdapter adapter, final SwipeRefreshLayout sc) {
 
         StringRequest sr = new StringRequest(MODERATE_CARD_URL,
                 new Response.Listener<String>() {
@@ -32,7 +34,14 @@ public class Connection {
                     public void onResponse(String response) {
                         //System.out.println(response);
                         new ParseJSON().parseJSON(response);
-                        new Setup().setUpItemTouchHelp(rv, context);
+                        //new Setup().setUpItemTouchHelp(rv, context);
+
+                        // Remove all current cards.
+                        adapter.deleteAll();
+
+                        // Add new ones.
+                        adapter.update( new Retrieval().getDBCard() );
+
                         sc.setRefreshing(false);
 
                     }

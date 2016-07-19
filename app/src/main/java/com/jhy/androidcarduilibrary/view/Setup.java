@@ -11,6 +11,7 @@ import com.jhy.androidcarduilibrary.database.Retrieval;
  * Created by jhyha on 11-Jul-16.
  */
 public class Setup {
+
     public void setUpItemTouchHelp(final RecyclerView rv, Context context) {
         final RVAdapter adapter = new RVAdapter(new Retrieval().getDBCard(), context, rv);
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -30,4 +31,5 @@ public class Setup {
         mItemTouchHelper.attachToRecyclerView(rv);
         rv.setAdapter(adapter);
     }
+
 }
