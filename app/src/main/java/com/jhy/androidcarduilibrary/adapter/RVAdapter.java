@@ -33,7 +33,8 @@ import java.util.List;
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
     private final int BULLETIN = 0, OPPORTUNITYMAP = 1, TRANSACTION = 2;
-    private final int RESEARCHREPORT = 3, QUICKBITES = 4;
+    private final int RESEARCHREPORT = 3, QUICKBITES = 4, CORPACTION = 5;
+    private final int INDEX = 6, LEADERVOTE = 7;
     private Context context;
     private RecyclerView recyclerView;
 
@@ -107,29 +108,61 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     public class ViewHolder4 extends RVAdapter.ViewHolder {
 
         private LinearLayout ll4;
-        private TextView label1, label2;
-        private ViewGroup vg;
+        private TextView label1;
 
         public ViewHolder4(View v) {
             super(v);
             ll4 = (LinearLayout) v.findViewById(R.id.card4);
             label1 = (TextView) ll4.findViewById(R.id.text1);
-            label2 = (TextView) ll4.findViewById(R.id.text2);
         }
     }
 
     public class ViewHolder5 extends RVAdapter.ViewHolder {
 
         private LinearLayout ll5;
-        private TextView label1, label2;
-        private ViewGroup vg;
+        private TextView label1;
 
-        public ViewHolder5(View v, ViewGroup viewGroup) {
+        public ViewHolder5(View v) {
             super(v);
-            vg = viewGroup;
             ll5 = (LinearLayout) v.findViewById(R.id.card5);
             label1 = (TextView) ll5.findViewById(R.id.text1);
-            label2 = (TextView) ll5.findViewById(R.id.text2);
+        }
+    }
+
+    public class ViewHolder6 extends RVAdapter.ViewHolder {
+
+        private LinearLayout ll6;
+        private TextView label1;
+
+        public ViewHolder6(View v) {
+            super(v);
+            ll6 = (LinearLayout) v.findViewById(R.id.card6);
+            label1 = (TextView) ll6.findViewById(R.id.text1);
+        }
+    }
+
+    public class ViewHolder7 extends RVAdapter.ViewHolder {
+
+        private LinearLayout ll7;
+        private TextView label1;
+
+        public ViewHolder7(View v) {
+            super(v);
+            ll7 = (LinearLayout) v.findViewById(R.id.card7);
+            label1 = (TextView) ll7.findViewById(R.id.text1);
+        }
+    }
+
+    public class ViewHolder8 extends RVAdapter.ViewHolder {
+
+        private TextView label1, label2, label3, label4;
+
+        public ViewHolder8(View v) {
+            super(v);
+            label1 = (TextView) v.findViewById(R.id.text1);
+            label2 = (TextView) v.findViewById(R.id.text2);
+            label3 = (TextView) v.findViewById(R.id.text3);
+            label4 = (TextView) v.findViewById(R.id.text4);
         }
     }
 
@@ -158,6 +191,12 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
             return 3;
         } else if (cards.get(position).getType().equals("QUICKBITES")) {
             return 4;
+        } else if (cards.get(position).getType().equals("CORPACTION")) {
+            return 5;
+        } else if (cards.get(position).getType().equals("INDEX")) {
+            return 6;
+        }else if (cards.get(position).getType().equals("LEADERVOTE")) {
+            return 7;
         }
         return -1;
     }
@@ -186,7 +225,19 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                 break;
             case QUICKBITES:
                 View v5 = inflater.inflate(R.layout.maincard_item_5, viewGroup, false);
-                viewHolder = new ViewHolder5(v5, viewGroup);
+                viewHolder = new ViewHolder5(v5);
+                break;
+            case CORPACTION:
+                View v6 = inflater.inflate(R.layout.maincard_item_6, viewGroup, false);
+                viewHolder = new ViewHolder6(v6);
+                break;
+            case INDEX:
+                View v7 = inflater.inflate(R.layout.maincard_item_7, viewGroup, false);
+                viewHolder = new ViewHolder7(v7);
+                break;
+            case LEADERVOTE:
+                View v8 = inflater.inflate(R.layout.item8, viewGroup, false);
+                viewHolder = new ViewHolder8(v8);
                 break;
         }
         return viewHolder;
@@ -215,7 +266,60 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                 ViewHolder5 vh5 = (ViewHolder5) viewHolder;
                 configureViewHolder5(vh5, position);
                 break;
+            case CORPACTION:
+                ViewHolder6 vh6 = (ViewHolder6) viewHolder;
+                configureViewHolder6(vh6, position);
+                break;
+            case INDEX:
+                ViewHolder7 vh7 = (ViewHolder7) viewHolder;
+                configureViewHolder7(vh7, position);
+                break;
+            case LEADERVOTE:
+                ViewHolder8 vh8 = (ViewHolder8) viewHolder;
+                configureViewHolder8(vh8, position);
+                break;
         }
+    }
+
+    /**
+     * Click listener for items in list card.
+     */
+    private View.OnClickListener onItemClickListener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View view) {
+            // TODO: Item click listener logic here.
+            Log.d("", "Clicked here.");
+            Toast.makeText(context, "Clicked on inner item.", Toast.LENGTH_SHORT).show();
+        }
+
+    };
+
+    /**
+     * Swipe touch listener for items in list card.
+     * @param view View of item.
+     * @param pos Pos of item in list.
+     * @return Touch listener.
+     */
+    private SwipeDismissRecyclerViewItemTouchListener getItemTouchListener(View view, int pos) {
+        return new SwipeDismissRecyclerViewItemTouchListener(
+                recyclerView,
+                view,
+                pos,
+                new SwipeDismissRecyclerViewItemTouchListener.DismissCallbacks() {
+                    @Override
+                    public boolean canDismiss(Object token) {
+                        // TODO: Allow item to be dismissed or not.
+
+                        return true;
+                    }
+
+                    @Override
+                    public void onDismiss(View view, Object token) {
+                        // TODO: Dismiss logic here.
+                    }
+                }
+        );
     }
 
     @SuppressLint("SetTextI18n")
@@ -282,50 +386,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         }
     }
 
-    /**
-     * Click listener for items in list card.
-     */
-    private View.OnClickListener onItemClickListener = new View.OnClickListener() {
-
-        @Override
-        public void onClick(View view) {
-            // TODO: Item click listener logic here.
-            Log.d("", "Clicked here.");
-            Toast.makeText(context, "Clicked on inner item.", Toast.LENGTH_SHORT).show();
-        }
-
-    };
-
-    /**
-     * Swipe touch listener for items in list card.
-     * @param view View of item.
-     * @param pos Pos of item in list.
-     * @return Touch listener.
-     */
-    private SwipeDismissRecyclerViewItemTouchListener getItemTouchListener(View view, int pos) {
-        return new SwipeDismissRecyclerViewItemTouchListener(
-                recyclerView,
-                view,
-                pos,
-                new SwipeDismissRecyclerViewItemTouchListener.DismissCallbacks() {
-                    @Override
-                    public boolean canDismiss(Object token) {
-                        // TODO: Allow item to be dismissed or not.
-
-                        return true;
-                    }
-
-                    @Override
-                    public void onDismiss(View view, Object token) {
-                        // TODO: Dismiss logic here.
-                    }
-                }
-        );
-    }
-
     @SuppressLint("SetTextI18n")
     private void configureViewHolder4(ViewHolder4 vh4, int position) {
-        if (vh4.ll4.getChildCount() == 4) {
+        if (vh4.ll4.getChildCount() > 4) {
             return;
         }
 
@@ -335,42 +398,51 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         vh4.label1.setText("research report");
 
         for (int i = 0; i < itms.size(); i++) {
-            View x = inflater.inflate(R.layout.item4, vh4.ll4, false);
+            if (vh4.ll4.getChildCount() > 3) {
+                Button b = new Button(context);
+                b.setText("View More");
+                b.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, RecyclerView.LayoutParams.WRAP_CONTENT));
+                // b.setId(MY_BUTTON);
+                //b.setOnClickListener();
+                vh4.ll4.addView(b);
+                return;
+            } else {
+                View x = inflater.inflate(R.layout.item4, vh4.ll4, false);
 
-            x.setOnTouchListener( getItemTouchListener(x, i) );
-            x.setOnClickListener(onItemClickListener);
+                x.setOnTouchListener(getItemTouchListener(x, i));
+                x.setOnClickListener(onItemClickListener);
 
-            TextView label1 = (TextView) x.findViewById(R.id.text1);
-            TextView label2 = (TextView) x.findViewById(R.id.text2);
-            TextView label3 = (TextView) x.findViewById(R.id.text3);
-            TextView label4 = (TextView) x.findViewById(R.id.text4);
-            TextView label5 = (TextView) x.findViewById(R.id.text5);
-            TextView label6 = (TextView) x.findViewById(R.id.text6);
-            TextView label7 = (TextView) x.findViewById(R.id.text7);
-            TextView label8 = (TextView) x.findViewById(R.id.text8);
-            TextView label9 = (TextView) x.findViewById(R.id.text9);
-            TextView label10 = (TextView) x.findViewById(R.id.text10);
+                TextView label1 = (TextView) x.findViewById(R.id.text1);
+                TextView label2 = (TextView) x.findViewById(R.id.text2);
+                TextView label3 = (TextView) x.findViewById(R.id.text3);
+                TextView label4 = (TextView) x.findViewById(R.id.text4);
+                TextView label5 = (TextView) x.findViewById(R.id.text5);
+                TextView label6 = (TextView) x.findViewById(R.id.text6);
+                TextView label7 = (TextView) x.findViewById(R.id.text7);
+                TextView label8 = (TextView) x.findViewById(R.id.text8);
+                TextView label9 = (TextView) x.findViewById(R.id.text9);
+                TextView label10 = (TextView) x.findViewById(R.id.text10);
 
-            try {
-                JSONObject body = new JSONObject(itms.get(i).getBd());
+                try {
+                    JSONObject body = new JSONObject(itms.get(i).getBd());
 
-                label1.setText("SeriesId: " + body.getString("SeriesId"));
-                label2.setText("SeriesCode: " + body.getString("SeriesCode"));
-                label3.setText("ShortName: " + body.getString("ShortName"));
-                label4.setText("SeriesName: " + body.getString("SeriesName"));
-                label5.setText("ResearchTitle: " + body.getString("ResearchTitle"));
-                label6.setText("ResearchHouse: " + body.getString("ResearchHouse"));
-                label7.setText("TargetPrice: " + body.getString("TargetPrice"));
-                label8.setText("LastPrice: " + body.getString("LastPrice"));
-                label9.setText("Recommendation: " + body.getString("Recommendation"));
-                label10.setText("Url: " + body.getString("Url"));
+                    label1.setText("SeriesId: " + body.getString("SeriesId"));
+                    label2.setText("SeriesCode: " + body.getString("SeriesCode"));
+                    label3.setText("ShortName: " + body.getString("ShortName"));
+                    label4.setText("SeriesName: " + body.getString("SeriesName"));
+                    label5.setText("ResearchTitle: " + body.getString("ResearchTitle"));
+                    label6.setText("ResearchHouse: " + body.getString("ResearchHouse"));
+                    label7.setText("TargetPrice: " + body.getString("TargetPrice"));
+                    label8.setText("LastPrice: " + body.getString("LastPrice"));
+                    label9.setText("Recommendation: " + body.getString("Recommendation"));
+                    label10.setText("Url: " + body.getString("Url"));
 
-                vh4.ll4.addView(x);
-            } catch (JSONException e) {
-                e.printStackTrace();
+                    vh4.ll4.addView(x);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -383,7 +455,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         vh5.label1.setText("QuickBites");
-       // if (itms.size() < 3) {
             for (int i = 0; i < itms.size(); i++) {
 
                 if(vh5.ll5.getChildCount() > 3) {
@@ -395,8 +466,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                     vh5.ll5.addView(b);
                     return;
                 } else {
-
                     View x = inflater.inflate(R.layout.item5, vh5.ll5, false);
+
+                    x.setOnTouchListener(getItemTouchListener(x, i));
+                    x.setOnClickListener(onItemClickListener);
+
                     TextView label1 = (TextView) x.findViewById(R.id.text1);
                     TextView label2 = (TextView) x.findViewById(R.id.text2);
                     TextView label3 = (TextView) x.findViewById(R.id.text3);
@@ -431,10 +505,34 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                     }
                 }
             }
-        /*} else {
-            for (int j = 0; j < 3; j++) {
+    }
 
-                View x = inflater.inflate(R.layout.item5, vh5.ll5, false);
+    @SuppressLint("SetTextI18n")
+    private void configureViewHolder6(ViewHolder6 vh6, int position) {
+        if (vh6.ll6.getChildCount() > 4) {
+            return;
+        }
+
+        List<Item> itms = cards.get(position).items;
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        vh6.label1.setText("QuickBites");
+        for (int i = 0; i < itms.size(); i++) {
+
+            if (vh6.ll6.getChildCount() > 3) {
+                Button b = new Button(context);
+                b.setText("View More");
+                b.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, RecyclerView.LayoutParams.WRAP_CONTENT));
+                // b.setId(MY_BUTTON);
+                //b.setOnClickListener();
+                vh6.ll6.addView(b);
+                return;
+            } else {
+                View x = inflater.inflate(R.layout.item6, vh6.ll6, false);
+
+                x.setOnTouchListener(getItemTouchListener(x, i));
+                x.setOnClickListener(onItemClickListener);
+
                 TextView label1 = (TextView) x.findViewById(R.id.text1);
                 TextView label2 = (TextView) x.findViewById(R.id.text2);
                 TextView label3 = (TextView) x.findViewById(R.id.text3);
@@ -445,39 +543,107 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                 TextView label8 = (TextView) x.findViewById(R.id.text8);
                 TextView label9 = (TextView) x.findViewById(R.id.text9);
                 TextView label10 = (TextView) x.findViewById(R.id.text10);
-                TextView label11 = (TextView) x.findViewById(R.id.text11);
 
                 try {
-                    JSONObject body = new JSONObject(itms.get(j).getBd());
+                    JSONObject body = new JSONObject(itms.get(i).getBd());
 
-                    label1.setText("Title: " + body.getString("Title"));
-                    label2.setText("PublishTS: " + body.getString("PublishTS"));
-                    label3.setText("Snippet: " + body.getString("Snippet"));
-                    label4.setText("NewsId: " + body.getString("NewsId"));
-                    label5.setText("SourceUrl: " + body.getString("SourceUrl"));
-                    label6.setText("ImageId: " + body.getString("ImageId"));
-                    label7.setText("ShowContent: " + body.getString("ShowContent"));
-                    label8.setText("SeriesId: " + body.getString("SeriesId"));
-                    label9.setText("SeriesCode: " + body.getString("SeriesCode"));
-                    label10.setText("ShortName: " + body.getString("ShortName"));
-                    label11.setText("SeriesName: " + body.getString("SeriesName"));
+                    label1.setText("Type: " + body.getString("Type"));
+                    label2.setText("SeriesId: " + body.getString("SeriesId"));
+                    label3.setText("SeriesCode: " + body.getString("SeriesCode"));
+                    label4.setText("ShortName: " + body.getString("ShortName"));
+                    label5.setText("SeriesName: " + body.getString("SeriesName"));
+                    label6.setText("Title: " + body.getString("Title"));
+                    label7.setText("Desc: " + body.getString("Desc"));
+                    label8.setText("ExDate: " + body.getString("ExDate"));
+                    label9.setText("EntitlementDate: " + body.getString("EntitlementDate"));
+                    label10.setText("Url: " + body.getString("Url"));
 
-                    vh5.ll5.addView(x);
+                    vh6.ll6.addView(x);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-            Button b = new Button(context);
-            b.setText("View More");
-            b.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, RecyclerView.LayoutParams.WRAP_CONTENT));
-            // b.setId(MY_BUTTON);
-            //b.setOnClickListener();
-            vh5.ll5.addView(b);
-        }*/
+        }
     }
 
+    @SuppressLint("SetTextI18n")
+    private void configureViewHolder7(ViewHolder7 vh7, int position) {
+        if (vh7.ll7.getChildCount() > 4) {
+            return;
+        }
 
+        List<Item> itms = cards.get(position).items;
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        vh7.label1.setText("QuickBites");
+        for (int i = 0; i < itms.size(); i++) {
+
+            if (vh7.ll7.getChildCount() > 3) {
+                Button b = new Button(context);
+                b.setText("View More");
+                b.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, RecyclerView.LayoutParams.WRAP_CONTENT));
+                // b.setId(MY_BUTTON);
+                //b.setOnClickListener();
+                vh7.ll7.addView(b);
+                return;
+            } else {
+                View x = inflater.inflate(R.layout.item7, vh7.ll7, false);
+
+                x.setOnTouchListener(getItemTouchListener(x, i));
+                x.setOnClickListener(onItemClickListener);
+
+                TextView label1 = (TextView) x.findViewById(R.id.text1);
+                TextView label2 = (TextView) x.findViewById(R.id.text2);
+                TextView label3 = (TextView) x.findViewById(R.id.text3);
+                TextView label4 = (TextView) x.findViewById(R.id.text4);
+                TextView label5 = (TextView) x.findViewById(R.id.text5);
+                TextView label6 = (TextView) x.findViewById(R.id.text6);
+                TextView label7 = (TextView) x.findViewById(R.id.text7);
+                TextView label8 = (TextView) x.findViewById(R.id.text8);
+                TextView label9 = (TextView) x.findViewById(R.id.text9);
+                TextView label10 = (TextView) x.findViewById(R.id.text10);
+
+                try {
+                    JSONObject body = new JSONObject(itms.get(i).getBd());
+
+                    label1.setText("SeriesId: " + body.getString("SeriesId"));
+                    label2.setText("SeriesCode: " + body.getString("SeriesCode"));
+                    label3.setText("SeriesType: " + body.getString("SeriesType"));
+                    label4.setText("ShortName: " + body.getString("ShortName"));
+                    label5.setText("LastClose: " + body.getString("LastClose"));
+                    label6.setText("ChangePrice: " + body.getString("ChangePrice"));
+                    label7.setText("ChangePtg: " + body.getString("ChangePtg"));
+                    label8.setText("LastDate: " + body.getString("LastDate"));
+                    label9.setText("PrevDate: " + body.getString("PrevDate"));
+                    label10.setText("UpdateTS: " + body.getString("UpdateTS"));
+
+                    vh7.ll7.addView(x);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void configureViewHolder8(ViewHolder8 vh8, int position) {
+        List<Item> itms = cards.get(position).items;
+        if (!itms.isEmpty()) {
+            for (int i = 0; i < itms.size(); i++) {
+                try {
+                    JSONObject body = new JSONObject(itms.get(i).getBd());
+                    vh8.label1.setText("CIFId: " + body.getString("CIFId"));
+                    vh8.label2.setText("ImageId: " + body.getString("ImageId"));
+                    vh8.label3.setText("Pseudonym: " + body.getString("Pseudonym"));
+                    vh8.label4.setText("Voted: " + body.getString("Voted"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     public void onItemRemove(final ViewHolder viewHolder, final RecyclerView rv) {
         int adapterPosition = viewHolder.getLayoutPosition();

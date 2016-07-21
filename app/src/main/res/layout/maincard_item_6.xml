@@ -10,17 +10,17 @@
     card_view:cardBackgroundColor="#0000ff"
     card_view:cardElevation="4dp"
     >
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/card4">
-
-    <TextView
-        android:id="@+id/text1"
-        android:textColor="#ffffff"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/card6">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/text1"
+            android:textColor="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
 </android.support.v7.widget.CardView>
