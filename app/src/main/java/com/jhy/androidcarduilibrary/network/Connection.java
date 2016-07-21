@@ -25,10 +25,11 @@ public class Connection {
 
     private String SIMPLE_CARD_URL = "http://www.jiran.org.my:8082/ACLWS/api/v1/simpleCards";
     private String MODERATE_CARD_URL = "http://www.jiran.org.my:8082/ACLWS/api/v1/moderateCards";
+    private String ALL_CARD_URL = "http://www.jiran.org.my:8082/ACLWS/api/v1/allCards";
 
     public void getJSON(final Context context, final RVAdapter adapter, final SwipeRefreshLayout sc) {
 
-        StringRequest sr = new StringRequest(MODERATE_CARD_URL,
+        StringRequest sr = new StringRequest(ALL_CARD_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -56,7 +57,7 @@ public class Connection {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<String, String>();
-                        params.put("redirect_uri", MODERATE_CARD_URL);
+                        params.put("redirect_uri", ALL_CARD_URL);
                         return params;
                     }
 
