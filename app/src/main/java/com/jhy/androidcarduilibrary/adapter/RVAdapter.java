@@ -290,6 +290,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         public void onClick(View view) {
             // TODO: Item click listener logic here.
             Log.d("", "Clicked here.");
+            System.out.println("Item clicked");
             Toast.makeText(context, "Clicked on inner item.", Toast.LENGTH_SHORT).show();
         }
 
@@ -311,12 +312,39 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                     public boolean canDismiss(Object token) {
                         // TODO: Allow item to be dismissed or not.
 
+                        System.out.println("SwipeDismissRecyclerViewItemTouchListener canDismiss clicked");
                         return true;
                     }
 
                     @Override
                     public void onDismiss(View view, Object token) {
                         // TODO: Dismiss logic here.
+
+                        System.out.println("SwipeDismissRecyclerViewItemTouchListener onDismiss clicked");
+
+                        Snackbar snackbar = Snackbar.make(view, "test", Snackbar.LENGTH_LONG)
+                                .setAction("UNDO", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        System.out.println("undo click");
+                                    }
+                                });
+                        snackbar.show();
+                        /*Snackbar snackbar = Snackbar.make(rv, "Archieved", Snackbar.LENGTH_LONG)
+                                .setAction("UNDO", new View.OnClickListener(){
+                                    @Override
+                                    public void onClick(View view){
+                                        int mAdapterPosition = viewHolder.getLayoutPosition();
+
+                                        //rv.addView(viewHolder.itemView);
+                                        cards.add(mAdapterPosition,cItem);
+                                        notifyItemInserted(mAdapterPosition);
+                                        rv.scrollToPosition(mAdapterPosition);
+                                        new FlagingRDTS().resetRDTS(cItem.items.get(0));//need to make change for multi list do not use get(0)
+                                    }
+                                });
+                        snackbar.show();*/
+
                     }
                 }
         );
@@ -645,34 +673,37 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         }
     }
 
-    public void onItemRemove(final ViewHolder viewHolder, final RecyclerView rv) {
-        int adapterPosition = viewHolder.getLayoutPosition();
+    public void onItemRemove(final int position, View cardView, RecyclerView recyclerView) {
+        //int adapterPosition = viewHolder.getLayoutPosition();
 
-        final Card cItem = cards.get(adapterPosition);
+        final Card cItem = cards.get(position);
         
         Snackbar snackbar = Snackbar
-                .make(rv, "Archieved", Snackbar.LENGTH_LONG)
+                .make(recyclerView, "Archieved", Snackbar.LENGTH_LONG)
                 .setAction("UNDO", new View.OnClickListener(){
                     @Override
                     public void onClick(View view){
-                        int mAdapterPosition = viewHolder.getLayoutPosition();
+                        //int mAdapterPosition = viewHolder.getLayoutPosition();
 
                         //rv.addView(viewHolder.itemView);
-                        cards.add(mAdapterPosition,cItem);
-                        notifyItemInserted(mAdapterPosition);
-                        rv.scrollToPosition(mAdapterPosition);
-                        new FlagingRDTS().resetRDTS(cItem.items.get(0));//need to make change for multi list do not use get(0)
+                        cards.add(position, cItem);
+                        //notifyItemInserted(mAdapterPosition);
+                        //rv.scrollToPosition(mAdapterPosition);
+                        //new FlagingRDTS().resetRDTS(cItem.items.get(0));//need to make change for multi list do not use get(0)
+                        notifyDataSetChanged();
                     }
                 });
         snackbar.show();
 
-        cards.remove(adapterPosition);
+        cards.remove(cItem);
 
-        rv.removeView(viewHolder.itemView);
+        notifyDataSetChanged();
+
+        //rv.removeView(viewHolder.itemView);
       //rv.removeViewAt(adapterPosition);
-        this.notifyItemRemoved(adapterPosition);
+        //this.notifyItemRemoved(adapterPosition);
 
-        new FlagingRDTS().saveRDTS(cItem.items.get(0));//need to make change for multi list
+        //new FlagingRDTS().saveRDTS(cItem.items.get(0));//need to make change for multi list
     }
 
     public void update(List<Card> newCards) {

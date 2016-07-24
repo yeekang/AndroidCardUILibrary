@@ -38,11 +38,6 @@ public class RecyclerViewActivity extends AppCompatActivity {
         FlowManager.init(new FlowConfig.Builder(this).openDatabasesOnInit(true).build());
         FlowManager.getDatabase(CardDB.class).getWritableDatabase();
 
-
-        //using card from library (similar to item2.xml)
-       // setContentView(new TestThis(this));
-
-
         //original recyclerview is tis
         setContentView(R.layout.recycler_view);
 
@@ -91,12 +86,18 @@ public class RecyclerViewActivity extends AppCompatActivity {
                     @Override
                     public boolean canDismiss(View view, int position) {
                         Log.d("", "Master dismiss");
+                        System.out.println("Master dismiss");
                         return true;
                     }
 
                     @Override
                     public void onDismiss(RecyclerView recyclerView, int[] reverseSortedPositions, View removedView) {
                         Log.d("", "On master dismiss");
+                        System.out.println("On master dismiss");
+                        for ( int i : reverseSortedPositions) {
+                            adapter.onItemRemove(i, removedView, recyclerView);
+                        }
+
                     }
                 }
         );
@@ -124,6 +125,4 @@ public class RecyclerViewActivity extends AppCompatActivity {
                 }
         ));
     }
-
-
 }
