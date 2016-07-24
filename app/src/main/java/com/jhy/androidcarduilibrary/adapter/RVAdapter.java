@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -39,11 +40,17 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     private RecyclerView recyclerView;
 
     private static List<Card> cards;
+    private static List<Item> itms;
 
     public RVAdapter(List<Card> cards) {
         this.cards = cards;
     }
 
+
+    public RVAdapter(List<Item>items, RecyclerView recyclerView){
+        this.itms = items;
+        this.recyclerView = recyclerView;
+    }
 
     public RVAdapter(List<Card> cards, Context context, RecyclerView recyclerView) {
         this.cards = cards;
@@ -285,15 +292,12 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
      * Click listener for items in list card.
      */
     private View.OnClickListener onItemClickListener = new View.OnClickListener() {
-
         @Override
         public void onClick(View view) {
             // TODO: Item click listener logic here.
             Log.d("", "Clicked here.");
-            System.out.println("Item clicked");
             Toast.makeText(context, "Clicked on inner item.", Toast.LENGTH_SHORT).show();
         }
-
     };
 
     /**
@@ -302,7 +306,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
      * @param pos Pos of item in list.
      * @return Touch listener.
      */
-    private SwipeDismissRecyclerViewItemTouchListener getItemTouchListener(View view, int pos) {
+    private SwipeDismissRecyclerViewItemTouchListener getItemTouchListener(View view, final int pos) {
         return new SwipeDismissRecyclerViewItemTouchListener(
                 recyclerView,
                 view,
@@ -321,26 +325,17 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                         // TODO: Dismiss logic here.
 
                         System.out.println("SwipeDismissRecyclerViewItemTouchListener onDismiss clicked");
+                        //Able to swipe away the item
+                        ((ViewManager)view.getParent()).removeView(view);
 
+                        /*
                         Snackbar snackbar = Snackbar.make(view, "test", Snackbar.LENGTH_LONG)
                                 .setAction("UNDO", new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
                                         System.out.println("undo click");
-                                    }
-                                });
-                        snackbar.show();
-                        /*Snackbar snackbar = Snackbar.make(rv, "Archieved", Snackbar.LENGTH_LONG)
-                                .setAction("UNDO", new View.OnClickListener(){
-                                    @Override
-                                    public void onClick(View view){
-                                        int mAdapterPosition = viewHolder.getLayoutPosition();
-
-                                        //rv.addView(viewHolder.itemView);
-                                        cards.add(mAdapterPosition,cItem);
-                                        notifyItemInserted(mAdapterPosition);
-                                        rv.scrollToPosition(mAdapterPosition);
-                                        new FlagingRDTS().resetRDTS(cItem.items.get(0));//need to make change for multi list do not use get(0)
+                                        ((ViewManager)view.getParent()).removeView(view);
+                                        ((ViewManager)view.getParent()).addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT) );
                                     }
                                 });
                         snackbar.show();*/

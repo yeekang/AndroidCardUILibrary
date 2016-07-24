@@ -113,11 +113,15 @@ public class RecyclerViewActivity extends AppCompatActivity {
                         // TODO: Disable for when card is a multi list.
                         // TODO: Or only enable for when single card.
 
-                        // Click logic here for each main card (row) in list.
-                        Log.d("", "Item click here.");
-                        Toast.makeText(RecyclerViewActivity.this, "Clicked on " + position, Toast.LENGTH_SHORT).show();
-                    }
+                        if (adapter.getItemViewType(position) == 0 || adapter.getItemViewType(position) == 1 || adapter.getItemViewType(position) == 2 || adapter.getItemViewType(position) == 7){
+                            // Click logic here for each main card (row) in list.
+                            Log.d("", "Item click here.");
+                            Toast.makeText(RecyclerViewActivity.this, "Clicked on " + position, Toast.LENGTH_SHORT).show();
+                        }else{
+                            view.setClickable(false);
+                        }
 
+                    }
                     @Override
                     public void onItemLongPress(View view, int position) {
 
