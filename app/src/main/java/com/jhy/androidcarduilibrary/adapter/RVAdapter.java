@@ -3,14 +3,12 @@ package com.jhy.androidcarduilibrary.adapter;
 import android.annotation.SuppressLint;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,9 +19,6 @@ import com.jhy.androidcarduilibrary.database.FlagingRDTS;
 import com.jhy.androidcarduilibrary.database.model.Card;
 import com.jhy.androidcarduilibrary.database.model.Item;
 import com.jhy.androidcarduilibrary.toolbox.SwipeDismissRecyclerViewItemTouchListener;
-import com.jhy.androidcarduilibrary.view.ScreenA;
-import com.jhy.androidcarduilibrary.view.ScreenB;
-import com.jhy.androidcarduilibrary.viewholder.CardViewHolder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -304,9 +299,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
      * Swipe touch listener for items in list card.
      * @param view View of item.
      * @param pos Pos of item in list.
+     * @param cardPos  Position of card
      * @return Touch listener.
      */
-    private SwipeDismissRecyclerViewItemTouchListener getItemTouchListener(View view, final int pos) {
+    private SwipeDismissRecyclerViewItemTouchListener getItemTouchListener(View view, final int pos, final int cardPos) {
         return new SwipeDismissRecyclerViewItemTouchListener(
                 recyclerView,
                 view,
@@ -328,8 +324,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
                         //Able to swipe away the item
                         final ViewGroup parent = ((ViewGroup)itemView.getParent());
+                        final FlagingRDTS rdts = new FlagingRDTS();
 
                         parent.removeView(itemView);
+                        rdts.updateRDTS(cards.get(cardPos).items.get(pos));
 
                         Snackbar snackbar = Snackbar
                                 .make(recyclerView, "Archieved", Snackbar.LENGTH_LONG)
@@ -337,6 +335,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                                     @Override
                                     public void onClick(View view){
                                         parent.addView(itemView, pos+1);
+                                        rdts.resetRDTS(cards.get(cardPos).items.get(pos));
                                     }
                                 });
                         snackbar.show();
@@ -432,7 +431,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
             } else {
                 View x = inflater.inflate(R.layout.item4, vh4.ll4, false);
 
-                x.setOnTouchListener(getItemTouchListener(x, i));
+                x.setOnTouchListener(getItemTouchListener(x, i, position));
                 x.setOnClickListener(onItemClickListener);
 
                 TextView label1 = (TextView) x.findViewById(R.id.text1);
@@ -491,7 +490,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                 } else {
                     View x = inflater.inflate(R.layout.item5, vh5.ll5, false);
 
-                    x.setOnTouchListener(getItemTouchListener(x, i));
+                    x.setOnTouchListener(getItemTouchListener(x, i, position));
                     x.setOnClickListener(onItemClickListener);
 
                     TextView label1 = (TextView) x.findViewById(R.id.text1);
@@ -553,7 +552,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
             } else {
                 View x = inflater.inflate(R.layout.item6, vh6.ll6, false);
 
-                x.setOnTouchListener(getItemTouchListener(x, i));
+                x.setOnTouchListener(getItemTouchListener(x, i, position));
                 x.setOnClickListener(onItemClickListener);
 
                 TextView label1 = (TextView) x.findViewById(R.id.text1);
@@ -613,7 +612,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
             } else {
                 View x = inflater.inflate(R.layout.item7, vh7.ll7, false);
 
-                x.setOnTouchListener(getItemTouchListener(x, i));
+                x.setOnTouchListener(getItemTouchListener(x, i, position));
                 x.setOnClickListener(onItemClickListener);
 
                 TextView label1 = (TextView) x.findViewById(R.id.text1);
@@ -668,41 +667,34 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         }
     }
 
-    public void onCardRemove(final int position, View cardView, RecyclerView recyclerView) {
-        //int adapterPosition = viewHolder.getLayoutPosition();
+    public void onCardRemove(final int position, final View cardView, RecyclerView recyclerView) {
 
         final Card cItem = cards.get(position);
-        
+        final FlagingRDTS rdts = new FlagingRDTS();
+
+        final ViewGroup parent = ((ViewGroup)cardView.getParent());
+        parent.removeView(cardView);
+
+        cards.remove(cItem);
+
+        for ( Item item : cItem.items) {rdts.updateRDTS(item);}
+
+        //notifyDataSetChanged();
+
         Snackbar snackbar = Snackbar
                 .make(recyclerView, "Archieved", Snackbar.LENGTH_LONG)
                 .setAction("UNDO", new View.OnClickListener(){
                     @Override
                     public void onClick(View view){
-                        //int mAdapterPosition = viewHolder.getLayoutPosition();
-
-                        //rv.addView(viewHolder.itemView);
                         cards.add(position, cItem);
-                        //notifyItemInserted(mAdapterPosition);
-                        //rv.scrollToPosition(mAdapterPosition);
-                        //new FlagingRDTS().resetRDTS(cItem.items.get(0));//need to make change for multi list do not use get(0)
-                        notifyDataSetChanged();
+                        for ( Item item : cItem.items) {rdts.resetRDTS(item);}
+
+                        parent.addView(cardView, position);
+
+                        //notifyDataSetChanged();
                     }
                 });
         snackbar.show();
-
-        cards.remove(cItem);
-
-        notifyDataSetChanged();
-
-        //rv.removeView(viewHolder.itemView);
-      //rv.removeViewAt(adapterPosition);
-        //this.notifyItemRemoved(adapterPosition);
-
-        //new FlagingRDTS().saveRDTS(cItem.items.get(0));//need to make change for multi list
-    }
-
-    public void onItemRemove(int pos) {
-
     }
 
     public void update(List<Card> newCards) {

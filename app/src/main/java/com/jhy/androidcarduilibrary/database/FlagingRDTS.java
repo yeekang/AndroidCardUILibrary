@@ -11,7 +11,7 @@ import java.util.Date;
 public class FlagingRDTS {
 
     //on swipe will call this, any parameter ?
-    public void saveRDTS(Item item) { // pass in Item if can
+    public void updateRDTS(Item item) { // pass in Item if can
         Date currentTS = new Date();
 
         item.setRdts(currentTS.toString());
