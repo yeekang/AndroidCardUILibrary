@@ -23,7 +23,7 @@ public class Setup {
 //
 //            @Override
 //            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
-//                adapter.onItemRemove((RVAdapter.ViewHolder) viewHolder,rv);
+//                adapter.onCardRemove((RVAdapter.ViewHolder) viewHolder,rv);
 //            }
 //        };
 //

@@ -321,25 +321,25 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
                     }
 
                     @Override
-                    public void onDismiss(View view, Object token) {
+                    public void onDismiss(final View itemView, Object token) {
                         // TODO: Dismiss logic here.
 
                         System.out.println("SwipeDismissRecyclerViewItemTouchListener onDismiss clicked");
-                        //Able to swipe away the item
-                        ((ViewManager)view.getParent()).removeView(view);
 
-                        /*
-                        Snackbar snackbar = Snackbar.make(view, "test", Snackbar.LENGTH_LONG)
-                                .setAction("UNDO", new View.OnClickListener() {
+                        //Able to swipe away the item
+                        final ViewGroup parent = ((ViewGroup)itemView.getParent());
+
+                        parent.removeView(itemView);
+
+                        Snackbar snackbar = Snackbar
+                                .make(recyclerView, "Archieved", Snackbar.LENGTH_LONG)
+                                .setAction("UNDO", new View.OnClickListener(){
                                     @Override
-                                    public void onClick(View view) {
-                                        System.out.println("undo click");
-                                        ((ViewManager)view.getParent()).removeView(view);
-                                        ((ViewManager)view.getParent()).addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT) );
+                                    public void onClick(View view){
+                                        parent.addView(itemView, pos+1);
                                     }
                                 });
-                        snackbar.show();*/
-
+                        snackbar.show();
                     }
                 }
         );
@@ -539,7 +539,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         List<Item> itms = cards.get(position).items;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        vh6.label1.setText("QuickBites");
+        vh6.label1.setText("CORPACTION");
         for (int i = 0; i < itms.size(); i++) {
 
             if (vh6.ll6.getChildCount() > 3) {
@@ -599,7 +599,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         List<Item> itms = cards.get(position).items;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        vh7.label1.setText("QuickBites");
+        vh7.label1.setText("Index");
         for (int i = 0; i < itms.size(); i++) {
 
             if (vh7.ll7.getChildCount() > 3) {
@@ -668,7 +668,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         }
     }
 
-    public void onItemRemove(final int position, View cardView, RecyclerView recyclerView) {
+    public void onCardRemove(final int position, View cardView, RecyclerView recyclerView) {
         //int adapterPosition = viewHolder.getLayoutPosition();
 
         final Card cItem = cards.get(position);
@@ -699,6 +699,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         //this.notifyItemRemoved(adapterPosition);
 
         //new FlagingRDTS().saveRDTS(cItem.items.get(0));//need to make change for multi list
+    }
+
+    public void onItemRemove(int pos) {
+
     }
 
     public void update(List<Card> newCards) {

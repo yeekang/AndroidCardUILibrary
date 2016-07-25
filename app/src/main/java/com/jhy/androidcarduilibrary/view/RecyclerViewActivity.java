@@ -1,7 +1,6 @@
 package com.jhy.androidcarduilibrary.view;
 
 
-
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,7 +19,6 @@ import com.jhy.androidcarduilibrary.network.Connection;
 import com.jhy.androidcarduilibrary.toolbox.RecyclerItemClickListener;
 import com.jhy.androidcarduilibrary.toolbox.RecyclerViewInterface;
 import com.jhy.androidcarduilibrary.toolbox.SwipeDismissRecyclerViewTouchListener;
-import com.jhy.uselesslibrary.TestThis;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
@@ -71,7 +69,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
-                adapter.onItemRemove((RVAdapter.ViewHolder) viewHolder,rv);
+                adapter.onCardRemove((RVAdapter.ViewHolder) viewHolder,rv);
             }
         };
 
@@ -94,8 +92,8 @@ public class RecyclerViewActivity extends AppCompatActivity {
                     public void onDismiss(RecyclerView recyclerView, int[] reverseSortedPositions, View removedView) {
                         Log.d("", "On master dismiss");
                         System.out.println("On master dismiss");
-                        for ( int i : reverseSortedPositions) {
-                            adapter.onItemRemove(i, removedView, recyclerView);
+                        for (int i : reverseSortedPositions) {
+                            adapter.onCardRemove(i, removedView, recyclerView);
                         }
 
                     }
@@ -113,15 +111,17 @@ public class RecyclerViewActivity extends AppCompatActivity {
                         // TODO: Disable for when card is a multi list.
                         // TODO: Or only enable for when single card.
 
-                        if (adapter.getItemViewType(position) == 0 || adapter.getItemViewType(position) == 1 || adapter.getItemViewType(position) == 2 || adapter.getItemViewType(position) == 7){
+                        if (adapter.getItemViewType(position) == 0 || adapter.getItemViewType(position) == 1 || adapter.getItemViewType(position) == 2 || adapter.getItemViewType(position) == 7) {
                             // Click logic here for each main card (row) in list.
-                            Log.d("", "Item click here.");
+                            Log.d("", "Card click here.");
+                            //view.setOnTouchListener(null);
                             Toast.makeText(RecyclerViewActivity.this, "Clicked on " + position, Toast.LENGTH_SHORT).show();
-                        }else{
-                            view.setClickable(false);
+                        } else {
+                            //view.setClickable(false);
                         }
 
                     }
+
                     @Override
                     public void onItemLongPress(View view, int position) {
 
