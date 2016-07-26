@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -109,49 +110,61 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
     public class ViewHolder4 extends RVAdapter.ViewHolder {
 
-        private LinearLayout ll4;
+        private LinearLayout layout_for_button4, ll4;
         private TextView label1;
+        private Button b;
 
         public ViewHolder4(View v) {
             super(v);
             ll4 = (LinearLayout) v.findViewById(R.id.card4);
+            layout_for_button4 = (LinearLayout) v.findViewById(R.id.footer);
             label1 = (TextView) ll4.findViewById(R.id.text1);
+            b = (Button) layout_for_button4.findViewById(R.id.button1);
         }
     }
 
     public class ViewHolder5 extends RVAdapter.ViewHolder {
 
-        private LinearLayout ll5;
+        private LinearLayout layout_for_button5, ll5;
         private TextView label1;
+        private Button b;
 
         public ViewHolder5(View v) {
             super(v);
             ll5 = (LinearLayout) v.findViewById(R.id.card5);
+            layout_for_button5 = (LinearLayout) v.findViewById(R.id.footer);
             label1 = (TextView) ll5.findViewById(R.id.text1);
+            b = (Button) layout_for_button5.findViewById(R.id.button1);
         }
     }
 
     public class ViewHolder6 extends RVAdapter.ViewHolder {
 
-        private LinearLayout ll6;
+        private LinearLayout layout_for_button6, ll6;
         private TextView label1;
+        private Button b;
 
         public ViewHolder6(View v) {
             super(v);
             ll6 = (LinearLayout) v.findViewById(R.id.card6);
+            layout_for_button6 = (LinearLayout) v.findViewById(R.id.footer);
             label1 = (TextView) ll6.findViewById(R.id.text1);
+            b = (Button) layout_for_button6.findViewById(R.id.button1);
         }
     }
 
     public class ViewHolder7 extends RVAdapter.ViewHolder {
 
-        private LinearLayout ll7;
+        private LinearLayout layout_for_button7, ll7;
         private TextView label1;
+        private Button b;
 
         public ViewHolder7(View v) {
             super(v);
             ll7 = (LinearLayout) v.findViewById(R.id.card7);
+            layout_for_button7 = (LinearLayout) v.findViewById(R.id.footer);
             label1 = (TextView) ll7.findViewById(R.id.text1);
+            b = (Button) layout_for_button7.findViewById(R.id.button1);
         }
     }
 
@@ -421,12 +434,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
 
         for (int i = 0; i < itms.size(); i++) {
             if (vh4.ll4.getChildCount() > 3) {
-                Button b = new Button(context);
-                b.setText("View More");
-                b.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, RecyclerView.LayoutParams.WRAP_CONTENT));
-                // b.setId(MY_BUTTON);
-                //b.setOnClickListener();
-                vh4.ll4.addView(b);
+                vh4.b.setVisibility(View.VISIBLE);
+                vh4.b.setText("View More");
                 return;
             } else {
                 View x = inflater.inflate(R.layout.item4, vh4.ll4, false);
@@ -480,12 +489,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
             for (int i = 0; i < itms.size(); i++) {
 
                 if(vh5.ll5.getChildCount() > 3) {
-                    Button b = new Button(context);
-                    b.setText("View More");
-                    b.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, RecyclerView.LayoutParams.WRAP_CONTENT));
-                    // b.setId(MY_BUTTON);
-                    //b.setOnClickListener();
-                    vh5.ll5.addView(b);
+                    vh5.b.setVisibility(View.VISIBLE);
+                    vh5.b.setText("View More");
                     return;
                 } else {
                     View x = inflater.inflate(R.layout.item5, vh5.ll5, false);
@@ -542,12 +547,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         for (int i = 0; i < itms.size(); i++) {
 
             if (vh6.ll6.getChildCount() > 3) {
-                Button b = new Button(context);
-                b.setText("View More");
-                b.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, RecyclerView.LayoutParams.WRAP_CONTENT));
-                // b.setId(MY_BUTTON);
-                //b.setOnClickListener();
-                vh6.ll6.addView(b);
+                vh6.b.setVisibility(View.VISIBLE);
+                vh6.b.setText("View More");
                 return;
             } else {
                 View x = inflater.inflate(R.layout.item6, vh6.ll6, false);
@@ -602,12 +603,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         for (int i = 0; i < itms.size(); i++) {
 
             if (vh7.ll7.getChildCount() > 3) {
-                Button b = new Button(context);
-                b.setText("View More");
-                b.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, RecyclerView.LayoutParams.WRAP_CONTENT));
-                // b.setId(MY_BUTTON);
-                //b.setOnClickListener();
-                vh7.ll7.addView(b);
+                vh7.b.setVisibility(View.VISIBLE);
+                vh7.b.setText("View More");
                 return;
             } else {
                 View x = inflater.inflate(R.layout.item7, vh7.ll7, false);
