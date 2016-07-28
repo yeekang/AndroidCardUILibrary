@@ -78,29 +78,30 @@ public class RecyclerViewActivity extends AppCompatActivity {
         */
 
         // Assign swipe listener to cards.
-        SwipeDismissRecyclerViewTouchListener swipeListener = new SwipeDismissRecyclerViewTouchListener(
-                rv,
-                new SwipeDismissRecyclerViewTouchListener.DismissCallbacks() {
-                    @Override
-                    public boolean canDismiss(View view, int position) {
-                        Log.d("", "Master dismiss");
-                        System.out.println("Master dismiss");
-                        return true;
-                    }
-
-                    @Override
-                    public void onDismiss(RecyclerView recyclerView, int[] reverseSortedPositions, View removedView) {
-                        Log.d("", "On master dismiss");
-                        System.out.println("On master dismiss");
-                        for (int i : reverseSortedPositions) {
-                            adapter.onCardRemove(i, removedView, recyclerView);
-                        }
-
-                    }
-                }
-        );
-        rv.setOnTouchListener(swipeListener);
-        rv.addOnScrollListener(swipeListener.makeScrollListener());
+//        SwipeDismissRecyclerViewTouchListener swipeListener = new SwipeDismissRecyclerViewTouchListener(
+//                rv,
+//                new SwipeDismissRecyclerViewTouchListener.DismissCallbacks() {
+//                    @Override
+//                    public boolean canDismiss(View view, int position) {
+//                        Log.d("", "Master dismiss");
+//                        System.out.println("Master dismiss");
+//                        return true;
+//                    }
+//
+//                    @Override
+//                    public void onDismiss(RecyclerView recyclerView, int[] reverseSortedPositions, View removedView) {
+//                        Log.d("", "On master dismiss");
+//                        System.out.println("On master dismiss");
+//                        for (int i : reverseSortedPositions) {
+//                            adapter.onCardRemove(i, removedView, recyclerView);
+//                        }
+//
+//                    }
+//                }
+//        );
+        rv.setOnTouchListener(adapter.getCardTouchListener());//getCardTouchListener contain onCardRemove funtionc
+        //rv.setOnTouchListener(swipeListener);
+        //rv.addOnScrollListener(swipeListener.makeScrollListener());
 
         // Assign on click listener to cards.
         rv.addOnItemTouchListener(new RecyclerItemClickListener(

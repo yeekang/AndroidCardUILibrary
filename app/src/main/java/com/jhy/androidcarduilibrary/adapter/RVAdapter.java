@@ -3,6 +3,7 @@ package com.jhy.androidcarduilibrary.adapter;
 import android.annotation.SuppressLint;
 
 import android.content.Context;
+import android.provider.ContactsContract;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,6 +20,7 @@ import com.jhy.androidcarduilibrary.database.FlagingRDTS;
 import com.jhy.androidcarduilibrary.database.model.Card;
 import com.jhy.androidcarduilibrary.database.model.Item;
 import com.jhy.uselesslibrary.adapter.CardAdapter;
+import com.jhy.uselesslibrary.toolbox.SwipeDismissRecyclerViewTouchListener;
 import com.jhy.uselesslibrary.viewholder.CardViewHolder;
 
 import org.json.JSONException;
@@ -52,11 +54,6 @@ public class RVAdapter extends CardAdapter<CardViewHolder> {
         this.recyclerView = recyclerView;
         setRecyclerView(recyclerView);
     }
-
-//    @Override
-//    public void setRecyclerView(RecyclerView recyclerView) {
-//        super.setRecyclerView(recyclerView);
-//    }
 
     public class ViewHolder extends CardViewHolder {
 
@@ -312,11 +309,6 @@ public class RVAdapter extends CardAdapter<CardViewHolder> {
         }
     };
 
-    @Override
-    public com.jhy.uselesslibrary.toolbox.SwipeDismissRecyclerViewItemTouchListener getItemTouchListener(View view, final int pos, final int cardPos) {
-        return super.getItemTouchListener(view, pos, cardPos);
-    }
-
     @SuppressLint("SetTextI18n")
     private void configureViewHolder1(ViewHolder1 vh1, int position) {
         List<Item> itms = cards.get(position).items;
@@ -399,8 +391,11 @@ public class RVAdapter extends CardAdapter<CardViewHolder> {
                 return;
             } else {
                 View x = inflater.inflate(R.layout.item4, vh4.card4innerContainer, false);
-
-                x.setOnTouchListener(getItemTouchListener(x, i, position));
+                boolean swipeable ;
+                if (itms.get(i).getRmb().equalsIgnoreCase("false")) {
+                    swipeable = false;
+                } else { swipeable = true; }
+                x.setOnTouchListener(getItemTouchListener(swipeable ,x, i, position));
                 x.setOnClickListener(onItemClickListener);
 
                 TextView label1 = (TextView) x.findViewById(R.id.text1);
@@ -454,8 +449,11 @@ public class RVAdapter extends CardAdapter<CardViewHolder> {
                 return;
             } else {
                 View x = inflater.inflate(R.layout.item5, vh5.card5innerContainer, false);
-
-                x.setOnTouchListener(getItemTouchListener(x, i, position));
+                boolean swipeable ;
+                if (itms.get(i).getRmb().equalsIgnoreCase("false")) {
+                    swipeable = false;
+                } else { swipeable = true; }
+                x.setOnTouchListener(getItemTouchListener(swipeable ,x, i, position));
                 x.setOnClickListener(onItemClickListener);
 
                 TextView label1 = (TextView) x.findViewById(R.id.text1);
@@ -512,8 +510,11 @@ public class RVAdapter extends CardAdapter<CardViewHolder> {
                 return;
             } else {
                 View x = inflater.inflate(R.layout.item6, vh6.card6innerContainer, false);
-
-                x.setOnTouchListener(getItemTouchListener(x, i, position));
+                boolean swipeable ;
+                if (itms.get(i).getRmb().equalsIgnoreCase("false")) {
+                    swipeable = false;
+                } else { swipeable = true; }
+                x.setOnTouchListener(getItemTouchListener(swipeable ,x, i, position));
                 x.setOnClickListener(onItemClickListener);
 
                 TextView label1 = (TextView) x.findViewById(R.id.text1);
@@ -568,8 +569,11 @@ public class RVAdapter extends CardAdapter<CardViewHolder> {
                 return;
             } else {
                 View x = inflater.inflate(R.layout.item7, vh7.card7innerContainer, false);
-
-                x.setOnTouchListener(getItemTouchListener(x, i, position));
+                boolean swipeable ;
+                if (itms.get(i).getRmb().equalsIgnoreCase("false")) {
+                    swipeable = false;
+                } else { swipeable = true; }
+                x.setOnTouchListener(getItemTouchListener(swipeable ,x, i, position));
                 x.setOnClickListener(onItemClickListener);
 
                 TextView label1 = (TextView) x.findViewById(R.id.text1);
@@ -624,39 +628,6 @@ public class RVAdapter extends CardAdapter<CardViewHolder> {
         }
     }
 
-    public void onCardRemove(final int position, final View cardView, RecyclerView recyclerView) {
-
-        final Card cItem = cards.get(position);
-        final FlagingRDTS rdts = new FlagingRDTS();
-
-        final ViewGroup parent = ((ViewGroup) cardView.getParent());
-        parent.removeView(cardView);
-
-        cards.remove(cItem);
-
-        for (Item item : cItem.items) {
-            rdts.updateRDTS(item);
-        }
-
-        //notifyDataSetChanged();
-
-        Snackbar snackbar = Snackbar
-                .make(recyclerView, "Archieved", Snackbar.LENGTH_LONG)
-                .setAction("UNDO", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        cards.add(position, cItem);
-                        for (Item item : cItem.items) {
-                            rdts.resetRDTS(item);
-                        }
-
-                        parent.addView(cardView, position);
-
-                        //notifyDataSetChanged();
-                    }
-                });
-        snackbar.show();
-    }
 
     public void update(List<Card> newCards) {
         notifyItemRangeInserted(cards.size(), cards.size() + newCards.size());
@@ -668,4 +639,65 @@ public class RVAdapter extends CardAdapter<CardViewHolder> {
         cards.clear();
     }
 
+    @Override
+    public void onCardRemove(final int position, final View cardView, RecyclerView recyclerView) {
+
+        super.onCardRemove(position, cardView, recyclerView);
+        final Card cItem = cards.get(position);
+////        final FlagingRDTS rdts = new FlagingRDTS();
+//
+//        final ViewGroup parent = ((ViewGroup) cardView.getParent());
+//        parent.removeView(cardView);
+//
+        cards.remove(cItem); // << statement that remove card
+//
+////        for (Item item : cItem.items) {
+////            rdts.updateRDTS(item);
+////        }
+//
+//        //notifyDataSetChanged();
+//
+        Snackbar snackbar = Snackbar
+                .make(recyclerView, "Archieved", Snackbar.LENGTH_LONG)
+                .setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        cards.add(position, cItem);
+//                        for (Item item : cItem.items) {
+//                            rdts.resetRDTS(item);
+//                        }
+
+                        //parent.addView(cardView, position);
+
+                        notifyDataSetChanged();
+                    }
+                });
+        snackbar.show();
+    }
+
+    @Override   //method overrided to make data manipulation
+    public void onItemRemove(final View itemView,final int pos, final int cardPos) {
+        final ViewGroup parent = (ViewGroup) itemView.getParent();
+
+        parent.removeView(itemView);
+
+        //override with data logic
+        final Item item = cards.get(cardPos).items.get(pos);
+        FlagingRDTS.updateRDTS(item);
+        cards.get(cardPos).items.remove(item);
+
+        Snackbar snackbar = Snackbar
+                .make(recyclerView, "Archieved", Snackbar.LENGTH_LONG)
+                .setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        parent.addView(itemView,pos);
+
+                        //override with data logic
+                        FlagingRDTS.resetRDTS(item);
+                        cards.get(cardPos).items.add(pos, item);
+                    }
+                });
+        snackbar.show();
+    }
 }

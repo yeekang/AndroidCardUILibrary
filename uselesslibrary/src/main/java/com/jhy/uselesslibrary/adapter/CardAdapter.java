@@ -5,7 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jhy.uselesslibrary.toolbox.RecyclerItemClickListener;
 import com.jhy.uselesslibrary.toolbox.SwipeDismissRecyclerViewItemTouchListener;
+import com.jhy.uselesslibrary.toolbox.SwipeDismissRecyclerViewTouchListener;
 import com.jhy.uselesslibrary.viewholder.CardViewHolder;
 
 /**
@@ -34,12 +36,15 @@ public abstract class CardAdapter<VH extends CardViewHolder> extends RecyclerVie
 
     /**
      * Swipe touch listener for items in list card.
-     * @param view View of item.
-     * @param pos Pos of item in list.
-     * @param cardPos  Position of card
+     *
+     * @param swipeAble return true if null
+     * @param view    View of item.
+     * @param pos     Pos of item in list.
+     * @param cardPos Position of card
      * @return Touch listener.
      */
-    public SwipeDismissRecyclerViewItemTouchListener getItemTouchListener(View view, final int pos, final int cardPos) {
+    public SwipeDismissRecyclerViewItemTouchListener getItemTouchListener
+    (final boolean swipeAble, View view, final int pos, final int cardPos) {
         return new SwipeDismissRecyclerViewItemTouchListener(
                 recyclerView,
                 view,
@@ -50,7 +55,8 @@ public abstract class CardAdapter<VH extends CardViewHolder> extends RecyclerVie
                         // TODO: Allow item to be dismissed or not.
 
                         System.out.println("SwipeDismissRecyclerViewItemTouchListener canDismiss clicked");
-                        return true;
+                        //swipeable decide by user
+                        return swipeAble;
                     }
 
                     @Override
@@ -59,27 +65,50 @@ public abstract class CardAdapter<VH extends CardViewHolder> extends RecyclerVie
 
                         System.out.println("SwipeDismissRecyclerViewItemTouchListener onDismiss clicked");
 
-                        //Able to swipe away the item
-                        final ViewGroup parent = ((ViewGroup)itemView.getParent());
-//                        final FlagingRDTS rdts = new FlagingRDTS();
-
-                        parent.removeView(itemView);
-//                        rdts.updateRDTS(cards.get(cardPos).items.get(pos));
-
-                        Snackbar snackbar = Snackbar
-                                .make(recyclerView, "Archieved", Snackbar.LENGTH_LONG)
-                                .setAction("UNDO", new View.OnClickListener(){
-                                    @Override
-                                    public void onClick(View view){
-                                        parent.addView(itemView, pos);
-//                                        rdts.resetRDTS(cards.get(cardPos).items.get(pos));
-                                    }
-                                });
-                        snackbar.show();
+                        //call method that can be edit by user;
+                        onItemRemove(itemView, pos, cardPos);
                     }
                 }
         );
     }
 
+    public void onItemRemove(final View itemView, final int pos, final int cardPos) {
+        //Able to swipe away the item
+        final ViewGroup parent = ((ViewGroup) itemView.getParent());
 
+        parent.removeView(itemView);
+
+        Snackbar snackbar = Snackbar
+                .make(recyclerView, "Archieved", Snackbar.LENGTH_LONG)
+                .setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        parent.addView(itemView, pos);
+                    }
+                });
+        snackbar.show();
+    }
+
+    public SwipeDismissRecyclerViewTouchListener getCardTouchListener() {
+        return new SwipeDismissRecyclerViewTouchListener(recyclerView,
+                new SwipeDismissRecyclerViewTouchListener.DismissCallbacks() {
+                    @Override
+                    public boolean canDismiss(View view, int position) {
+                        return true;
+                    }
+
+                    @Override
+                    public void onDismiss(RecyclerView recyclerView,
+                            final int[] reverseSortedPositions, final View swipedView) {
+
+                        for (int i : reverseSortedPositions) {
+                            onCardRemove(i, swipedView, recyclerView);
+                        }
+                    }
+                });
+    }
+
+    public void onCardRemove(final int position, final View cardView, RecyclerView recyclerView) {
+        // TODO: must remove data from adapter.
+    }
 }
