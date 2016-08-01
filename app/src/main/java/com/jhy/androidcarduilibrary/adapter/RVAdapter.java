@@ -26,6 +26,8 @@ import com.jhy.uselesslibrary.viewholder.CardViewHolder;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class RVAdapter extends CardAdapter<CardViewHolder> {
@@ -188,16 +190,19 @@ public class RVAdapter extends CardAdapter<CardViewHolder> {
     }
 
     public int getItemViewType(int position) {
-//        String type = cards.get(position).getType();
-//
-//        for (int i = 0 ; i < itemViewTypes.size() ; i++) {
-//            if (type.equalsIgnoreCase(itemViewTypes.get(i)))
-//                return i;
-//        }
-//
-//        return -1;
 
-        if (cards.get(position).getType().equals("BULLETIN")) {
+        List<String> itemViewTypes = new ArrayList<String>(Arrays.asList("BULLETIN","OPPORTUNITYMAP", "TRANSACTION", "RESEARCHREPORT",
+                                     "QUICKBITES", "CORPACTION", "INDEX", "LEADERVOTE" ));
+           String type = cards.get(position).getType();
+
+        for (int i = 0 ; i < itemViewTypes.size() ; i++) {
+            if (type.equalsIgnoreCase(itemViewTypes.get(i)))
+                return i;
+        }
+
+        return -1;
+
+        /*if (cards.get(position).getType().equals("BULLETIN")) {
             return 0;
         } else if (cards.get(position).getType().equals("OPPORTUNITYMAP")) {
             return 1;
@@ -214,7 +219,7 @@ public class RVAdapter extends CardAdapter<CardViewHolder> {
         } else if (cards.get(position).getType().equals("LEADERVOTE")) {
             return 7;
         }
-        return -1;
+        return -1;*/
     }
 
     @Override
