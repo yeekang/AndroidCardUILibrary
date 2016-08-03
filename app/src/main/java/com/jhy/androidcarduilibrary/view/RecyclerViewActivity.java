@@ -22,6 +22,10 @@ import com.jhy.androidcarduilibrary.toolbox.SwipeDismissRecyclerViewTouchListene
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 public class RecyclerViewActivity extends AppCompatActivity {
 
@@ -57,6 +61,11 @@ public class RecyclerViewActivity extends AppCompatActivity {
 
         //initializeAdapter();
         adapter = new RVAdapter(new Retrieval().getDBCard(), this, rv);
+
+        List<String> itemViewTypes = new ArrayList<String>(Arrays.asList("BULLETIN","OPPORTUNITYMAP", "TRANSACTION", "RESEARCHREPORT",
+                "QUICKBITES", "CORPACTION", "INDEX", "LEADERVOTE" ));
+        adapter.setItemViewTypes(itemViewTypes);
+
         rv.setAdapter(adapter);
 
         /*

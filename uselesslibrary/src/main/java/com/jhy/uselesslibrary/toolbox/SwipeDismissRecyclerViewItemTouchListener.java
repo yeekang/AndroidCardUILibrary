@@ -97,7 +97,7 @@ public class SwipeDismissRecyclerViewItemTouchListener implements View.OnTouchLi
                     mVelocityTracker = VelocityTracker.obtain();
                     mVelocityTracker.addMovement(motionEvent);
                 }
-                return true;
+                return false;
             }
 
             case MotionEvent.ACTION_CANCEL: {

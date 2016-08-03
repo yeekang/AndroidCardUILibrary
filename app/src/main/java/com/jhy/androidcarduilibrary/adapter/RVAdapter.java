@@ -41,6 +41,10 @@ public class RVAdapter extends CardAdapter<CardViewHolder> {
     private static List<Card> cards;
     private static List<Item> itms;
 
+    public RVAdapter() {
+        super();
+    }
+
     public RVAdapter(List<Card> cards) {
         this.cards = cards;
     }
@@ -55,6 +59,34 @@ public class RVAdapter extends CardAdapter<CardViewHolder> {
         this.context = context;
         this.recyclerView = recyclerView;
         setRecyclerView(recyclerView);
+    }
+
+    @Override
+    public void onSnackbarShow(View v) {
+        System.out.println("bar showed");
+    }
+
+    @Override
+    public void onSnackbarDismiss(View v) {
+        System.out.println("bar dismiss");
+
+    }
+
+    @Override
+    public void onSnackbarUndo(View v) {
+
+    }
+
+    @Override
+    public void onSnackbarUndo(View v, Object data, int removedPosition) {
+        Log.d("JHR", "on undo");
+
+        Card removedCard = (Card) data;
+
+        Log.d("JHR",removedCard.getType() );
+
+        cards.add(removedPosition, removedCard);
+        notifyItemInserted(removedPosition);
     }
 
     public class ViewHolder extends CardViewHolder {
@@ -189,37 +221,42 @@ public class RVAdapter extends CardAdapter<CardViewHolder> {
         return cards.size();
     }
 
-    public int getItemViewType(int position) {
+//    public int getItemViewType(int position) {
+//
+//        List<String> itemViewTypes = new ArrayList<String>(Arrays.asList("BULLETIN","OPPORTUNITYMAP", "TRANSACTION", "RESEARCHREPORT",
+//                                     "QUICKBITES", "CORPACTION", "INDEX", "LEADERVOTE" ));
+//           String type = cc;
+//
+//        for (int i = 0 ; i < itemViewTypes.size() ; i++) {
+//            if (type.equalsIgnoreCase(itemViewTypes.get(i)))
+//                return i;
+//        }
+//
+//        return -1;
+//
+//        /*if (cards.get(position).getType().equals("BULLETIN")) {
+//            return 0;
+//        } else if (cards.get(position).getType().equals("OPPORTUNITYMAP")) {
+//            return 1;
+//        } else if (cards.get(position).getType().equals("TRANSACTION")) {
+//            return 2;
+//        } else if (cards.get(position).getType().equals("RESEARCHREPORT")) {
+//            return 3;
+//        } else if (cards.get(position).getType().equals("QUICKBITES")) {
+//            return 4;
+//        } else if (cards.get(position).getType().equals("CORPACTION")) {
+//            return 5;
+//        } else if (cards.get(position).getType().equals("INDEX")) {
+//            return 6;
+//        } else if (cards.get(position).getType().equals("LEADERVOTE")) {
+//            return 7;
+//        }
+//        return -1;*/
+//    }
 
-        List<String> itemViewTypes = new ArrayList<String>(Arrays.asList("BULLETIN","OPPORTUNITYMAP", "TRANSACTION", "RESEARCHREPORT",
-                                     "QUICKBITES", "CORPACTION", "INDEX", "LEADERVOTE" ));
-           String type = cards.get(position).getType();
-
-        for (int i = 0 ; i < itemViewTypes.size() ; i++) {
-            if (type.equalsIgnoreCase(itemViewTypes.get(i)))
-                return i;
-        }
-
-        return -1;
-
-        /*if (cards.get(position).getType().equals("BULLETIN")) {
-            return 0;
-        } else if (cards.get(position).getType().equals("OPPORTUNITYMAP")) {
-            return 1;
-        } else if (cards.get(position).getType().equals("TRANSACTION")) {
-            return 2;
-        } else if (cards.get(position).getType().equals("RESEARCHREPORT")) {
-            return 3;
-        } else if (cards.get(position).getType().equals("QUICKBITES")) {
-            return 4;
-        } else if (cards.get(position).getType().equals("CORPACTION")) {
-            return 5;
-        } else if (cards.get(position).getType().equals("INDEX")) {
-            return 6;
-        } else if (cards.get(position).getType().equals("LEADERVOTE")) {
-            return 7;
-        }
-        return -1;*/
+    @Override
+    public String getDataType(int position) {
+        return cards.get(position).getType();
     }
 
     @Override
@@ -645,9 +682,9 @@ public class RVAdapter extends CardAdapter<CardViewHolder> {
     }
 
     @Override
-    public void onCardRemove(final int position, final View cardView, RecyclerView recyclerView) {
+    public Object onCardRemove(final int position, final View cardView) {
 
-        super.onCardRemove(position, cardView, recyclerView);
+        //super.onCardRemove(position, cardView, recyclerView);
         final Card cItem = cards.get(position);
 ////        final FlagingRDTS rdts = new FlagingRDTS();
 //
@@ -655,54 +692,41 @@ public class RVAdapter extends CardAdapter<CardViewHolder> {
 //        parent.removeView(cardView);
 //
         cards.remove(cItem); // << statement that remove card
+//        notifyItemRemoved(position);
 //
 ////        for (Item item : cItem.items) {
 ////            rdts.updateRDTS(item);
 ////        }
 //
-//        //notifyDataSetChanged();
+        //notifyDataSetChanged();
 //
-        Snackbar snackbar = Snackbar
-                .make(recyclerView, "Archieved", Snackbar.LENGTH_LONG)
-                .setAction("UNDO", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        cards.add(position, cItem);
-//                        for (Item item : cItem.items) {
-//                            rdts.resetRDTS(item);
-//                        }
 
-                        //parent.addView(cardView, position);
-
-                        notifyDataSetChanged();
-                    }
-                });
-        snackbar.show();
+        return cItem;
     }
 
     @Override   //method overrided to make data manipulation
     public void onItemRemove(final View itemView,final int pos, final int cardPos) {
-        final ViewGroup parent = (ViewGroup) itemView.getParent();
+//        final ViewGroup parent = (ViewGroup) itemView.getParent();
 
-        parent.removeView(itemView);
+//        parent.removeView(itemView);
 
         //override with data logic
         final Item item = cards.get(cardPos).items.get(pos);
         FlagingRDTS.updateRDTS(item);
         cards.get(cardPos).items.remove(item);
 
-        Snackbar snackbar = Snackbar
-                .make(recyclerView, "Archieved", Snackbar.LENGTH_LONG)
-                .setAction("UNDO", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        parent.addView(itemView,pos);
-
-                        //override with data logic
-                        FlagingRDTS.resetRDTS(item);
-                        cards.get(cardPos).items.add(pos, item);
-                    }
-                });
-        snackbar.show();
+//        Snackbar snackbar = Snackbar
+//                .make(recyclerView, "Archieved", Snackbar.LENGTH_LONG)
+//                .setAction("UNDO", new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        parent.addView(itemView,pos);
+//
+//                        //override with data logic
+//                        FlagingRDTS.resetRDTS(item);
+//                        cards.get(cardPos).items.add(pos, item);
+//                    }
+//                });
+//        snackbar.show();
     }
 }
